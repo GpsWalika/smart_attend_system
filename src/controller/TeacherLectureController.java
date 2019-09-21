@@ -56,8 +56,9 @@ import model.TeacherLectureDAO;
 				search(request, response);
 			else if(action.equals("teacher-lecture-info.do"))
 				info(request, response);
-			else if(action.equals("student-lecture-hcheck.do"))
+			else if(action.equals("student-lecture-hcheck.do")) {
 				checkQu(request, response);
+			}
 			else if(action.equals("student-lecture-ahcheck.do"))
 				allCheckQu(request, response);
 						
@@ -175,7 +176,7 @@ import model.TeacherLectureDAO;
 			
 			try {
 				String dat = test.substring(test.indexOf(".") + 1, test.length());
-				System.out.println(dat);
+
 				if(dat.length() <= 7) dat += "0";
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -276,6 +277,7 @@ import model.TeacherLectureDAO;
 		//학생 출석 직접 클릭했을 때
 		public void checkQu(HttpServletRequest request, HttpServletResponse response) throws Exception 
 		{
+			
 			TeacherLectureDAO dao = new TeacherLectureDAO();
 			
 			try {
@@ -288,6 +290,7 @@ import model.TeacherLectureDAO;
 				String rowno = request.getParameter("rowno");
 				String colno = request.getParameter("colno");
 				String v = request.getParameter("v");
+				
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 				

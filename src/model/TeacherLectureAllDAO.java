@@ -76,21 +76,22 @@ public class TeacherLectureAllDAO extends DAOBase{
 		TeacherLectureAllDTO dto = null;
 		ArrayList<TeacherLectureAllDTO> dtoList = null;
 		StudentDTO stdto = null;
-		
 		try {
-			String SQL ="SELECT lectureday.normhour, lectureday.th FROM subject LEFT JOIN lecture ON lecture.subject_id = subject.id LEFT JOIN lectureday ON lectureday.lecture_id = lecture.id WHERE subject.id='"+value+"' LIMIT 1;";
-
+			String SQL ="SELECT lectureday.normhour, lectureday.th, lecture.id FROM subject LEFT JOIN lecture ON lecture.subject_id = subject.id LEFT JOIN lectureday ON lectureday.lecture_id = lecture.id WHERE subject.id='"+value+"' LIMIT 1;";
+			
 			conn = getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			rs.next();
 			th_hour[0] = rs.getInt("lectureday.th");
 			th_hour[1] = rs.getInt("lectureday.normhour");
+			String lecture_id = rs.getString("lecture.id");
 			ArrayList<String> check = null;
 			dtoList = new ArrayList<TeacherLectureAllDTO>();
 			
-			SQL = "select mylecture.*, student.* from subject left join lecture on subject.id = lecture.subject_id left join mylecture on mylecture.lecture_id = lecture.id left join student on student.id = mylecture.student_id where student.id = mylecture.student_id and subject.id='"+value+"' and lecture.class='"+grade+"'";
-	  		conn = getConnection();
+			SQL = "select mylecture.*, student.* from subject left join lecture on subject.id = lecture.subject_id left join mylecture on mylecture.lecture_id = lecture.id left join student on student.id = mylecture.student_id where student.id = mylecture.student_id and subject.id='"+value+"' and mylecture.lecture_id='"+lecture_id+"'";
+	  		
+			conn = getConnection();
 	  		stmt = conn.createStatement();
 	  		rs = stmt.executeQuery(SQL);
 	  		while(rs.next()) {
@@ -131,10 +132,9 @@ public class TeacherLectureAllDAO extends DAOBase{
 		return null;
 	}
 	public void stuCheck(String subId, String lecClass, String rowno, String colno, String v){
-		
-		String SQL = "SELECT mylecture.*, lectureday.normhour FROM subject left join lecture on lecture.subject_id = subject.id left join mylecture on mylecture.lecture_id = lecture.id left join lectureday on lectureday.lecture_id = lecture.id where subject.id='"+subId+"' and lecture.class='"+lecClass+"' and mylecture.student_id = "+rowno+" group by mylecture.student_id;";
+		//SELECT lectureday.normhour from lectureday where lectureday.lecture_id='242';
+		String SQL = "SELECT mylecture.*, lectureday.normhour FROM subject left join lecture on lecture.subject_id = subject.id left join mylecture on mylecture.lecture_id = lecture.id left join lectureday on lectureday.lecture_id = lecture.id where subject.id='"+subId+"' and mylecture.student_id = "+rowno+" and mylecture.lecture_id = lecture.id group by mylecture.student_id;";
 		ArrayList<String> thList = null;
-		
 		try {
 			thList = new ArrayList<String>();
 			
@@ -145,15 +145,17 @@ public class TeacherLectureAllDAO extends DAOBase{
 			//
 			rs.next();
 			int hour = rs.getInt("lectureday.normhour");
-			
+			String lecture_id = rs.getString("mylecture.lecture_id");
 			int iattend = 20;//rs.getInt("mylecture.iattend");
 			int ixhour = 0;//rs.getInt("mylecture.ixhour");
 			int ilate = 0;//rs.getInt("mylecture.ilate");
 			
 			thList = new ArrayList<String>();
+			
+			
 			for(int i = 0; i < hour * 15; i++) 
 				thList.add(rs.getString("mylecture.h"+(i+1)));
-				
+			
 			thList.set(Integer.parseInt(colno)-1, v);
 			
 			for(int i = 0; i < hour * 15; i++)
@@ -168,10 +170,8 @@ public class TeacherLectureAllDAO extends DAOBase{
 			}
 			
 			if(ixhour != 0 || ilate >= hour)
-				iattend=weekhour1[hour][ixhour+(ilate/hour)];
-				
-			
-			SQL = "UPDATE mylecture SET ilate='"+ilate+"',ixhour='"+ixhour+"',iattend='"+iattend+"', h"+colno+" = "+v+" WHERE mylecture.student_id = "+rowno+";";
+				iattend=weekhour1[hour-1][ixhour+(ilate/hour)-1];
+			SQL = "UPDATE mylecture SET ilate='"+ilate+"',ixhour='"+ixhour+"',iattend='"+iattend+"', h"+colno+" = "+v+" WHERE mylecture.student_id = "+rowno+" and mylecture.lecture_id = '"+lecture_id+"';";
 			pstmt = conn.prepareStatement(SQL);
 			int n = pstmt.executeUpdate();
 			

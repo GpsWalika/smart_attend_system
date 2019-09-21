@@ -171,7 +171,6 @@ public class TeacherLectureDAO extends DAOBase{
 	public void stuCheck(String day, String lecture_id, String rowno, String colno, String v){
 		String SQL = "SELECT * FROM lecture left join lectureday on lecture.id = lectureday.lecture_id left join mylecture on lecture.id = mylecture.lecture_id left join student on mylecture.student_id = student.id left join depart on student.depart_id = depart.id where lectureday.normdate = DATE('"+day+"') and lectureday.lecture_id = "+lecture_id+" and student.id="+rowno+";";
 		ArrayList<String> thList = null;
-		
 		try {
 			thList = new ArrayList<String>();
 			
@@ -210,7 +209,8 @@ public class TeacherLectureDAO extends DAOBase{
 				iattend=weekhour1[hour][ixhour+(ilate/hour)];
 				
 			
-			SQL = "UPDATE mylecture SET ilate='"+ilate+"',ixhour='"+ixhour+"',iattend='"+iattend+"', h"+((th - 1)*hour + Integer.parseInt(colno))+" = "+v+" WHERE mylecture.student_id = "+rowno+";";
+			SQL = "UPDATE mylecture SET ilate='"+ilate+"',ixhour='"+ixhour+"',iattend='"+iattend+"', h"+((th - 1)*hour + Integer.parseInt(colno))+" = "+v+" WHERE mylecture.student_id = "+rowno+" and mylecture.lecture_id = "+ lecture_id+";";
+
 			pstmt = conn.prepareStatement(SQL);
 			int n = pstmt.executeUpdate();
 			
@@ -238,7 +238,7 @@ public class TeacherLectureDAO extends DAOBase{
 				h += ("h"+Integer.toString(j))+"=0,";
 			h = h.substring(0, h.length()-1);
 			for(int i = 0; i < list.size(); i++) {
-				SQL = "update mylecture set "+h+" where mylecture.student_id="+list.get(i).getStu().getId();
+				SQL = "update mylecture set "+h+" where mylecture.student_id="+list.get(i).getStu().getId()+" and mylecture.lecture_id="+lecture_id;
 				pstmt = conn.prepareStatement(SQL);
 				int n = pstmt.executeUpdate();
 			}
