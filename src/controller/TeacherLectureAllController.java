@@ -26,7 +26,7 @@ import model.TeacherLectureDTO;
 public class TeacherLectureAllController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HttpSession sesobj = null;
-	
+	TeacherLectureAllDAO dao = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -72,10 +72,9 @@ public class TeacherLectureAllController extends HttpServlet {
 	}
 	
 	private void stuCheck(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
-		TeacherLectureAllDAO dao = new TeacherLectureAllDAO();
+		dao = new TeacherLectureAllDAO();
 		
 		String [] str = request.getParameter("str").split("-");
-
 		dao.stuCheck(str[str.length-1], str[str.length-2], request.getParameter("rowno"), request.getParameter("colno"), request.getParameter("v"));
 		stuList2(request, response);
 	}
@@ -106,7 +105,7 @@ public class TeacherLectureAllController extends HttpServlet {
 		
 		StringBuffer re = new StringBuffer("");
 		
-		TeacherLectureAllDAO dao = new TeacherLectureAllDAO();
+		dao = new TeacherLectureAllDAO();
 		ArrayList<SubjectDTO> strList = dao.selectList(values);
 		
 		re.append("<select name='sel5' class='form-control form-control-sm' >");
@@ -121,13 +120,12 @@ public class TeacherLectureAllController extends HttpServlet {
 	
 
 	private void stuList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
-		TeacherLectureAllDAO dao = new TeacherLectureAllDAO();
+		dao = new TeacherLectureAllDAO();
 		ArrayList<TeacherLectureDTO> dto = null;
 
 		StringBuffer re = new StringBuffer("");
 		
 		String[] values = request.getParameter("str").split("-");
-		System.out.println(values[0] + " " + values[1] + " " + values[2] + " " + values[3]);
 		if(values[0].length() <= 3) values[0] += "0";
 		dto = dao.lecInfo(values[values.length-1]);
 		
@@ -170,9 +168,9 @@ public class TeacherLectureAllController extends HttpServlet {
 	
 	private void stuList2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
 		ArrayList<TeacherLectureAllDTO> dtoList = null;
-		TeacherLectureAllDAO dao = new TeacherLectureAllDAO();
+		dao = new TeacherLectureAllDAO();
 		StringBuffer re = new StringBuffer("");
-		int [] th_hour = new int[2];
+		int []th_hour = new int[1];
 		
 		String[] values = request.getParameter("str").split("-");
 		if(values[0].length() <= 3) values[0] += "0";
@@ -182,31 +180,31 @@ public class TeacherLectureAllController extends HttpServlet {
 		if(dtoList.size()>=1)
 		{
 			for(int i = 0; i < dtoList.size(); i++) {
-			re.append("<tr><td class='mycolor3'>"+dtoList.get(i).getDepart()+"</td><td class='mycolor3'>"+dtoList.get(i).getStu().getGrade()+"</td><td class='mycolor3'>"+dtoList.get(i).getStu().getSchoolno()+"</td><td class='mycolor3'>"+dtoList.get(i).getStu().getState()+"</td><td class='mycolor3'>"+dtoList.get(i).getStu().getName()+"</td>"+
-						"<td class='mycolor4'><font color='blue'><b>"+dtoList.get(i).getIlate()+"</b></font></td><td class='mycolor4'><font color='red'><b>"+dtoList.get(i).getIxhour()+"</b></font></td><td class='mycolor4'><b>"+dtoList.get(i).getIattend()+"</b></td>");
-			for(int j = 0; j < th_hour[1] * 15; j++)
-			{
-				String str = null;
-				if(dtoList.get(i).getH().get(j) != null)
+				re.append("<tr><td class='mycolor3'>"+dtoList.get(i).getDepart()+"</td><td class='mycolor3'>"+dtoList.get(i).getStu().getGrade()+"</td><td class='mycolor3'>"+dtoList.get(i).getStu().getSchoolno()+"</td><td class='mycolor3'>"+dtoList.get(i).getStu().getState()+"</td><td class='mycolor3'>"+dtoList.get(i).getStu().getName()+"</td>"+
+							"<td class='mycolor4'><font color='blue'><b>"+dtoList.get(i).getIlate()+"</b></font></td><td class='mycolor4'><font color='red'><b>"+dtoList.get(i).getIxhour()+"</b></font></td><td class='mycolor4'><b>"+dtoList.get(i).getIattend()+"</b></td>");
+				for(int j = 0; j < th_hour[0] * 15; j++)
 				{
-					if(dtoList.get(i).getH().get(j).equals("0"))
-						str = "fa fa-circle-o fa-1x";
-					else if(dtoList.get(i).getH().get(j).equals("1"))
-						str = "text-primary fa fa-times-circle-o fa-1x";
-					else if(dtoList.get(i).getH().get(j).equals("2"))
-						str = "text-danger fa fa-close fa-1x";
-					
-					re.append("<td id='"+dtoList.get(i).getStu().getId()+"^"+(j+1)+"' style='line-height:1.3rem'><i class='"+str+"' onchange='j("+dtoList.get(i).getStu().getId()+");' onclick='choose1("+dtoList.get(i).getStu().getId()+","+(j+1)+");' style='cursor:pointer'></i></td>");
+					String str = null;
+					if(dtoList.get(i).getH().get(j) != null)
+					{
+						if(dtoList.get(i).getH().get(j).equals("0"))
+							str = "fa fa-circle-o fa-1x";
+						else if(dtoList.get(i).getH().get(j).equals("1"))
+							str = "text-primary fa fa-times-circle-o fa-1x";
+						else if(dtoList.get(i).getH().get(j).equals("2"))
+							str = "text-danger fa fa-close fa-1x";
+						
+						re.append("<td id='"+dtoList.get(i).getStu().getId()+"^"+(j+1)+"' style='line-height:1.3rem'><i class='"+str+"' onchange='j("+dtoList.get(i).getStu().getId()+");' onclick='choose1("+dtoList.get(i).getStu().getId()+","+(j+1)+");' style='cursor:pointer'></i></td>");
+					}
+					else if(dtoList.get(i).getH().get(j) == null)
+					{
+	//					if(dtoList.get(i) == 4)
+	//						re.append("<td><font color='green'><b>보</b></font></td>");
+	//					else
+							re.append("<td><i class='text-warning fa fa-question fa-1x'></i></td>");
+						
+					}
 				}
-				else if(dtoList.get(i).getH().get(j) == null)
-				{
-//					if(dtoList.get(i) == 4)
-//						re.append("<td><font color='green'><b>보</b></font></td>");
-//					else
-						re.append("<td><i class='text-warning fa fa-question fa-1x'></i></td>");
-					
-				}
-			}
 			
 			re.append("</tr>");
 			}

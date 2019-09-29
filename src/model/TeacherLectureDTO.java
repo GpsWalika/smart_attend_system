@@ -5,6 +5,8 @@ public class TeacherLectureDTO {
 	String subject_name;
 	String subject_id;
 	TeacherDTO teacher_id;
+	LectureDTO lecture_id;
+	RoomDTO room_id;
 	String _class;
 	int th;
 	int number;
