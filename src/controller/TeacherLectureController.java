@@ -175,7 +175,7 @@ import model.TeacherLectureDAO;
 			
 			try {
 				String dat = test.substring(test.indexOf(".") + 1, test.length());
-				System.out.println(dat);
+				
 				if(dat.length() <= 7) dat += "0";
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");

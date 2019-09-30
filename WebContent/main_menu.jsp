@@ -65,7 +65,7 @@
 						<ul class="list-unstyled">
 							<li><a href="ad_timeall.html" style="padding:5px 0 5px 40px;">학과별 시간표</a></li>
 							<li><a href="ad_timeteacher.html" style="padding:5px 0 5px 40px;">교수별 강의현황</a></li>
-							<li><a href="ad_lecmove.html" style="padding:5px 0 5px 40px;">휴보강</a></li>
+							<li><a href="ad_lecmove.jsp" style="padding:5px 0 5px 40px;">휴보강</a></li>
 						</ul>
 					</li>
 					<li class="submenu">
@@ -77,7 +77,7 @@
 							<li><a href="timetable-list.do" style="padding:5px 0 5px 40px;">시간표 작성</a></li>
 							<li><a href="as-timetable-all.do" style="padding:5px 0 5px 40px;">학과별 시간표</a></li>
 							<li><a href="lecture-sublecture.do" style="padding:5px 0 5px 40px;">과목별 출석부</a></li>
-							<li><a href="as_lecmove.html" style="padding:5px 0 5px 40px;">휴보강</a></li>
+							<li><a href="as_lecmove.jsp" style="padding:5px 0 5px 40px;">휴보강</a></li>
 						</ul>
 					</li>
 					<li class="submenu">
