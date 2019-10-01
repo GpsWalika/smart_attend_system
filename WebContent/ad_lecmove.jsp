@@ -7,6 +7,7 @@
 <!-- 학생 : 유소영(3), 김해리(3), 이민호(2), 김진혁(2)                                              -->
 <!-------------------------------------------------------------------------------->	
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -119,11 +120,9 @@
 												</div>
 												<div class="input-group-append">
 													<select name="sel1" class="form-control form-control-sm">
-														<option value="2019" selected>2019</option>
-														<option value='2018'>2018</option>
-														<option value='2017'>2017</option>
-														<option value='2016'>2016</option>
-														<option value='2015'>2015</option>
+														<c:forEach var="item" items="${year}">
+															<option value="${item}">${item}</option>
+														</c:forEach>
 													</select>
 													&nbsp;
 													<select name="sel2" class="form-control form-control-sm">
@@ -131,7 +130,16 @@
 														<option value='2'>2학기</option>
 													</select>
 												</div>
-												&nbsp;<input type="button" class="btn btn-sm btn-primary" value="검색" onclick="">
+												<script>
+													function search(number){
+														if(number === 1)
+														{
+															form1.action="ad-lecmove-search.do?year="+form1.sel1.value+"&term="+form1.sel2.value;
+															form1.submit();
+														}
+													}
+												</script>
+												&nbsp;<input type="button" class="btn btn-sm btn-primary" value="검색" onclick="search(1);">
 											</div>
 
 										</div>

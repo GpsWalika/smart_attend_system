@@ -11,13 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.ADRemoveDAO;
+
 /**
  * Servlet implementation class ADRemoveController
  */
-@WebServlet({"/ad-lecmove-list.do"})
+@WebServlet({"/ad-lecmove-list.do", "/ad-lecmove-search.do"})
 public class ADRemoveController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     HttpSession sesobj = null;
+    ADRemoveDAO dao = new ADRemoveDAO();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -38,9 +41,9 @@ public class ADRemoveController extends HttpServlet {
 		
 		if(action.equals("ad-lecmove-list.do")) {
 			list(request, response);
-		}/*else if(action.equals("assist-info.do")){
-			Info(request, response);
-		}else if(action.equals("assist-register.do")) {
+		}else if(action.equals("assist-info.do")){
+			search(request, response);
+		}/*else if(action.equals("assist-register.do")) {
 			Insert(request, response);
 		}else if(action.equals("assist-delete.do")) {
 			Delete(request, response);
@@ -57,10 +60,19 @@ public class ADRemoveController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		int minmax[] = new int[2];
+		minmax = dao.Year(request, response);
+		
+		if(minmax != null) {
+			request.setAttribute("year", minmax);
+		}else {System.out.println("minmax error");}
+		RequestDispatcher dis = request.getRequestDispatcher("ad_lecmove.jsp"); 
+		dis.forward(request, response);
+	}
+	private void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
 		
 		RequestDispatcher dis = request.getRequestDispatcher("ad_lecmove.jsp"); 
 		dis.forward(request, response);
-		//response.sendRedirect("assist-list.do");
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
