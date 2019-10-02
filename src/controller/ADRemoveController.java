@@ -45,8 +45,8 @@ public class ADRemoveController extends HttpServlet {
 		
 		if(action.equals("ad-lecmove-list.do")) {
 			list(request, response);
-		}else if(action.equals("assist-info.do")){
-			search(request, response);
+		}else if(action.equals("assist-last-app.do")){
+			lastapp(request, response);
 		}/*else if(action.equals("assist-register.do")) {
 			Insert(request, response);
 		}else if(action.equals("assist-delete.do")) {
@@ -83,7 +83,7 @@ public class ADRemoveController extends HttpServlet {
 		RequestDispatcher dis = request.getRequestDispatcher("ad_lecmove.jsp"); 
 		dis.forward(request, response);
 	}
-	private void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+	private void lastapp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
 		
 		RequestDispatcher dis = request.getRequestDispatcher("ad_lecmove.jsp"); 
 		dis.forward(request, response);

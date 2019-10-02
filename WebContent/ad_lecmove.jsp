@@ -155,6 +155,21 @@
 															form1.submit();
 														}
 													}
+													function check(number){
+														if(number === 1)
+														{
+															if(confirm('최종 확인 하시겠습니까?')){
+																form1.action="";
+																form1.submit();
+															}
+														}
+														if(number === 2){
+															if(confirm('반려 하시겠습니까?')){
+																form1.action="";
+																form1.submit();
+															}
+														}
+													}
 												</script>
 												&nbsp;<input type="button" class="btn btn-sm btn-primary" value="검색" onclick="search(1);">
 											</div>
@@ -177,7 +192,7 @@
 										<td>처리상태</td>
 										<td>직원</td>
 									</tr>
-									
+									<!-- 0 신청 or 1 취소 or 2 학과장승인 or 3 반려 or 4 최종승인 -->
 									<c:forEach var="item" items="${dtolist}">
 										<tr>
 											<td>${item.getDepart()}</td>
@@ -191,8 +206,8 @@
 											<td class="mycolor3">${item.getBuildName()} ${item.getRoomName()}</td>
 											<td><b>${item.getState()}</b></td>
 											<td>
-												<a href="" class="btn btn-xs btn-outline-primary">최종승인</a>
-												<a href="" class="btn btn-xs btn-outline-danger">반려</a>
+												<a href="javascript:check(1);" class="btn btn-xs btn-outline-primary">최종승인</a>
+												<a href="javascript:check(2);" class="btn btn-xs btn-outline-danger">반려</a>
 											</td>
 										</tr>
 									</c:forEach>
@@ -207,9 +222,9 @@
 										<td class="mycolor3">1, 2 교시</td>
 										<td class="mycolor3">인관 컴퓨터실1</td>
 										<td><b>최종승인</b></td>
-										<td>					<!-- 0 신청 or 1 취소 or 2 학과장승인 or 3 반려 or 4 최종승인 -->
-											<a href="" class="btn btn-xs btn-outline-primary">최종승인</a>
-											<a href="" class="btn btn-xs btn-outline-danger">반려</a>
+										<td>					
+											<a href="javascript:check(1);" class="btn btn-xs btn-outline-primary">최종승인</a>
+											<a href="javascript:check(2);" class="btn btn-xs btn-outline-danger">반려</a>
 										</td>
 									</tr>
 
