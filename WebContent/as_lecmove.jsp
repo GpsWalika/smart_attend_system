@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!-------------------------------------------------------------------------------->	
 <!-- 프로그램 : 인덕대학교 컴퓨터소프트웨어학과 전자출석 Demo                              -->
 <!--                                                                                                                  -->
@@ -7,6 +5,7 @@
 <!-- 교수 : 윤형태 (2019.5 -        )                                                                         -->
 <!-- 학생 : 유소영(3), 김해리(3), 이민호(2), 김진혁(2)                                              -->
 <!-------------------------------------------------------------------------------->	
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -69,9 +68,7 @@
 	<!--상단 메뉴 끝 -->
 	
  
-	<!-- 좌측 Sidebar 메뉴 시작-->
-	<%@ include file="main_menu.jsp" %>
-	<!-- 좌측 Sidebar 메뉴 끝-->
+	<%@include file="main_menu.jsp" %>
 		
     <div class="content-page">
 	    <div class="content">

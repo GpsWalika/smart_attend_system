@@ -214,7 +214,7 @@ public class TeacherLectureDAO extends DAOBase{
 				
 			
 			SQL = "UPDATE mylecture SET ilate='"+ilate+"',ixhour='"+ixhour+"',iattend='"+iattend+"', h"+((th - 1)*hour + Integer.parseInt(colno))+" = "+v+" WHERE mylecture.student_id = "+rowno+" and mylecture.lecture_id = "+ lecture_id+";";
-			System.out.println("stuCheck : " + SQL);
+			
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.executeUpdate();
 			

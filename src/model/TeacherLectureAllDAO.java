@@ -144,7 +144,6 @@ public class TeacherLectureAllDAO extends DAOBase{
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 
-			//
 			rs.next();
 			
 			int hour = rs.getInt("subject.ihour");
@@ -160,7 +159,7 @@ public class TeacherLectureAllDAO extends DAOBase{
 			for(int i = 0; i < hour * 15; i++) 
 				thList.add(rs.getString("mylecture.h"+(i+1)));
 				
-			thList.set(((th)*hour + (Integer.parseInt(colno) % hour)), v);
+			thList.set(((th)*hour + (Integer.parseInt(colno) % hour) - 1), v);
 			for(int i = 0; i < hour * 15; i++)
 			{
 				if(thList.get(i) == null);
@@ -175,6 +174,7 @@ public class TeacherLectureAllDAO extends DAOBase{
 			if(ixhour != 0 || ilate >= hour)
 				iattend=weekhour1[hour-1][ixhour+(ilate/hour)-1];
 			SQL = "UPDATE mylecture SET ilate='"+ilate+"',ixhour='"+ixhour+"',iattend='"+iattend+"', h"+((th)*hour + (Integer.parseInt(colno) % hour))+" = "+v+" WHERE mylecture.student_id = "+rowno+" and mylecture.lecture_id = "+ lecture_id+";";
+			
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.executeUpdate();
 			

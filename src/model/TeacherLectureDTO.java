@@ -24,6 +24,18 @@ public class TeacherLectureDTO {
 	String roomName;
 	int classification;
 	
+	public LectureDTO getLecture_id() {
+		return lecture_id;
+	}
+	public void setLecture_id(LectureDTO lecture_id) {
+		this.lecture_id = lecture_id;
+	}
+	public RoomDTO getRoom_id() {
+		return room_id;
+	}
+	public void setRoom_id(RoomDTO room_id) {
+		this.room_id = room_id;
+	}
 	public int getClassification() {
 		return classification;
 	}
