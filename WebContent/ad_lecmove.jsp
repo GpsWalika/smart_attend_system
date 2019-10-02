@@ -8,6 +8,8 @@
 <!-------------------------------------------------------------------------------->	
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -32,7 +34,6 @@
 <body class="adminbody">
 
 <div id="main">
-
 	<!--상단 메뉴 시작 -->
 	<div class="headerbar">
 
@@ -119,22 +120,38 @@
 													<span class="input-group-text">년도</span>
 												</div>
 												<div class="input-group-append">
+													<c:set var="lyear" value="${fn:split(year, '^')}" />
 													<select name="sel1" class="form-control form-control-sm">
-														<c:forEach var="item" items="${year}">
-															<option value="${item}">${item}</option>
+														<c:forEach var="YEAR" items="${lyear}">
+															<c:choose>
+																<c:when test="${YEAR eq y}">
+																	<option value="${YEAR}" selected>${YEAR}</option>
+																</c:when>
+																<c:otherwise>
+																	<option value="${YEAR}">${YEAR}</option>
+																</c:otherwise>
+															</c:choose>
 														</c:forEach>
 													</select>
 													&nbsp;
 													<select name="sel2" class="form-control form-control-sm">
-														<option value='1' selected>1학기</option>
-														<option value='2'>2학기</option>
+														<c:forEach var="TERM" begin="1" end="2">
+															<c:choose>
+																<c:when test="${TERM eq t}">
+																	<option value="${TERM}" selected>${TERM}</option>
+																</c:when>
+																<c:otherwise>
+																	<option value="${TERM}">${TERM}</option>
+																</c:otherwise>
+															</c:choose>
+														</c:forEach>
 													</select>
 												</div>
 												<script>
 													function search(number){
 														if(number === 1)
 														{
-															form1.action="ad-lecmove-list.do?year="+form1.sel1.value+"&term="+form1.sel2.value;
+															form1.action="ad-lecmove-list.do";
 															form1.submit();
 														}
 													}
@@ -160,6 +177,25 @@
 										<td>처리상태</td>
 										<td>직원</td>
 									</tr>
+									
+									<c:forEach var="item" items="${dtolist}">
+										<tr>
+											<td>${item.getDepart()}</td>
+											<td>${item.getTeacher_id().getName()}</td>
+											<td>${item.getSubject_name()}</td>
+											<td>${item.getGrade()}학년/${item.get_class()}반</td>
+											<td class="mycolor4">${item.getNormdate()}</td>
+											<td class="mycolor4"></td>
+											<td class="mycolor3">${item.getRestdate()}</td>
+											<td class="mycolor3"></td>
+											<td class="mycolor3">${item.getBuildName()} ${item.getRoomName()}</td>
+											<td><b>${item.getState()}</b></td>
+											<td>
+												<a href="" class="btn btn-xs btn-outline-primary">최종승인</a>
+												<a href="" class="btn btn-xs btn-outline-danger">반려</a>
+											</td>
+										</tr>
+									</c:forEach>
 									<tr>
 										<td>컴소학과</td>
 										<td>교수님1</td>

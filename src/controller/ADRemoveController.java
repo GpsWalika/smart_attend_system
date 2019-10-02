@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.ADRemoveDAO;
+import model.ADRemoveDTO;
 
 /**
  * Servlet implementation class ADRemoveController
@@ -21,6 +23,8 @@ public class ADRemoveController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     HttpSession sesobj = null;
     ADRemoveDAO dao = new ADRemoveDAO();
+    ArrayList<ADRemoveDTO> dtolist = null;
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -60,12 +64,21 @@ public class ADRemoveController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
-		int minmax[] = new int[2];
-		minmax = dao.Year(request, response);
+	
+		if(request.getAttribute("dtolist") != null) request.removeAttribute("dtolist");
 		
-		if(minmax != null) {
-			request.setAttribute("year", minmax);
-		}else {System.out.println("minmax error");}
+		String minmax = dao.Year(request, response);
+		dtolist = dao.DTOlist(request, response);
+		
+		String year = request.getParameter("sel1");
+		String term = request.getParameter("sel2");
+		
+		if(year != null && term != null) {request.setAttribute("y", year);	request.setAttribute("t", term);}
+		
+		if(minmax != null) {request.setAttribute("year", minmax);}
+		else {System.out.println("minmax error");}
+		
+		if(dtolist != null) { request.setAttribute("dtolist", dtolist); }
 		
 		RequestDispatcher dis = request.getRequestDispatcher("ad_lecmove.jsp"); 
 		dis.forward(request, response);
