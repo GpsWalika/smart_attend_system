@@ -94,10 +94,29 @@ public class ADRemoveDAO extends DAOBase{
 		return null;
 	}
 	public void lastapp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
-		System.out.println("이이잉");
+		String no = request.getParameter("no");
+		try {
+			String query="update lectureday set state='최종승인' where id = " + no;
+			conn = getConnection();
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {	closeDBResources(rs, stmt, pstmt, conn);	}
+		
 	}
 	public void returnlec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
-		System.out.println("이이잉");
+		String no = request.getParameter("no");
+		try {
+			String query="update lectureday set state='반려' where id = " + no;
+			conn = getConnection();
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {	closeDBResources(rs, stmt, pstmt, conn);	}
 	}
 
 }
