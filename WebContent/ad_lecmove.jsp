@@ -200,9 +200,19 @@
 											<td>${item.getSubject_name()}</td>
 											<td>${item.getGrade()}학년/${item.get_class()}반</td>
 											<td class="mycolor4">${item.getNormdate()}</td>
-											<td class="mycolor4"></td>
+											<td class="mycolor4">
+												<c:forEach var="i" begin="${item.getNormstart() - 8}" end="${item.getNormhour() + item.getNormstart() - 9}" varStatus="status">
+													${i}<c:if test="${i ne status.end}">,</c:if>
+												</c:forEach>
+												교시
+											</td>
 											<td class="mycolor3">${item.getRestdate()}</td>
-											<td class="mycolor3"></td>
+											<td class="mycolor3">
+												<c:forEach var="i" begin="${item.getReststart() - 8}" end="${item.getResthour() + item.getReststart() - 9}" varStatus="status">
+													${i}<c:if test="${i ne status.end}">,</c:if>
+												</c:forEach>
+												교시
+											</td>
 											<td class="mycolor3">${item.getBuildName()} ${item.getRoomName()}</td>
 											<td><b>${item.getState()}</b></td>
 											<td>
@@ -211,23 +221,6 @@
 											</td>
 										</tr>
 									</c:forEach>
-									<tr>
-										<td>컴소학과</td>
-										<td>교수님1</td>
-										<td>PHP</td>
-										<td>2학년/A반</td>
-										<td class="mycolor4">2019-03-12</td>
-										<td class="mycolor4">3, 4 교시</td>
-										<td class="mycolor3">2019-06-15</td>
-										<td class="mycolor3">1, 2 교시</td>
-										<td class="mycolor3">인관 컴퓨터실1</td>
-										<td><b>최종승인</b></td>
-										<td>					
-											<a href="javascript:check(1);" class="btn btn-xs btn-outline-primary">최종승인</a>
-											<a href="javascript:check(2);" class="btn btn-xs btn-outline-danger">반려</a>
-										</td>
-									</tr>
-
 								</table>
 								</form>
 
