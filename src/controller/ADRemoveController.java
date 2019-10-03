@@ -18,7 +18,7 @@ import model.ADRemoveDTO;
 /**
  * Servlet implementation class ADRemoveController
  */
-@WebServlet({"/ad-lecmove-list.do", "/ad-lecmove-search.do"})
+@WebServlet({"/ad-lecmove-list.do"})
 public class ADRemoveController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     HttpSession sesobj = null;
@@ -45,19 +45,7 @@ public class ADRemoveController extends HttpServlet {
 		
 		if(action.equals("ad-lecmove-list.do")) {
 			list(request, response);
-		}else if(action.equals("assist-last-app.do")){
-			lastapp(request, response);
-		}/*else if(action.equals("assist-register.do")) {
-			Insert(request, response);
-		}else if(action.equals("assist-delete.do")) {
-			Delete(request, response);
-		}else if(action.equals("assist-list.do")) {
-			Inquiry(request, response);
-		}else if(action.equals("assist-inputdata.do")){
-			inputdata(request,response);
 		}
-		else
-			;*/
 		
 	}//
 	/**
@@ -80,14 +68,22 @@ public class ADRemoveController extends HttpServlet {
 		
 		if(dtolist != null) { request.setAttribute("dtolist", dtolist); }
 		
-		RequestDispatcher dis = request.getRequestDispatcher("ad_lecmove.jsp"); 
-		dis.forward(request, response);
-	}
-	private void lastapp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		System.out.println(request.getParameter("no") + " " + request.getParameter("c"));
+		//최종승인 or 반려가 들어왔을 떄
+		if(request.getParameter("no") != null && request.getParameter("c") != null)
+		{
 		
+			//최종승인
+			if(request.getParameter("c").equals("1"))
+				dao.lastapp(request,response);
+			//반려
+			else if(request.getParameter("c").equals("2"))
+				dao.returnlec(request,response);
+		}
 		RequestDispatcher dis = request.getRequestDispatcher("ad_lecmove.jsp"); 
 		dis.forward(request, response);
 	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			process(request,response);

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -91,4 +93,11 @@ public class ADRemoveDAO extends DAOBase{
 		} finally {	closeDBResources(rs, stmt, pstmt, conn);	}
 		return null;
 	}
+	public void lastapp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		System.out.println("이이잉");
+	}
+	public void returnlec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		System.out.println("이이잉");
+	}
+
 }

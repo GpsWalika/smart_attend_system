@@ -69,7 +69,9 @@
 
 	</div>
 	<!--상단 메뉴 끝 -->
-	
+	<script>
+		history.replaceState({}, null, location.pathname);
+	</script>
  
 	<%@include file="main_menu.jsp" %>
 		
@@ -155,17 +157,17 @@
 															form1.submit();
 														}
 													}
-													function check(number){
+													function check(number, no){
 														if(number === 1)
 														{
 															if(confirm('최종 확인 하시겠습니까?')){
-																form1.action="";
+																form1.action="ad-lecmove-list.do?no="+no+"&c=1";
 																form1.submit();
 															}
 														}
 														if(number === 2){
 															if(confirm('반려 하시겠습니까?')){
-																form1.action="";
+																form1.action="ad-lecmove-list.do?no="+no+"&c=2";
 																form1.submit();
 															}
 														}
@@ -215,9 +217,9 @@
 											</td>
 											<td class="mycolor3">${item.getBuildName()} ${item.getRoomName()}</td>
 											<td><b>${item.getState()}</b></td>
-											<td>
-												<a href="javascript:check(1);" class="btn btn-xs btn-outline-primary">최종승인</a>
-												<a href="javascript:check(2);" class="btn btn-xs btn-outline-danger">반려</a>
+											<td><!-- <a href="ad-lecmove-lastapp.do?LDID=${item.getId()}" class="btn btn-xs btn-outline-primary">최종승인</a> -->
+												<a href="javascript:check(1, ${item.getId()});" class="btn btn-xs btn-outline-primary">최종승인</a>
+												<a href="javascript:check(2, ${item.getId()});" class="btn btn-xs btn-outline-danger">반려</a>
 											</td>
 										</tr>
 									</c:forEach>
