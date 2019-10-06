@@ -108,7 +108,7 @@ import model.TeacherLectureDAO;
 				if(text == null) text=sdf.format(curToday);
 				StringBuffer re = new StringBuffer("");
 				TeacherLectureDAO lectureDAO = new TeacherLectureDAO();
-				ArrayList<TeacherLectureDTO> list = lectureDAO.search(text);
+				ArrayList<TeacherLectureDTO> list = lectureDAO.search(text, request, response);
 				
 				for(int i = 0; i < list.size(); i++)
 				{
@@ -189,7 +189,7 @@ import model.TeacherLectureDAO;
 			
 			StringBuffer re = new StringBuffer("");
 			TeacherLectureDAO lectureDAO = new TeacherLectureDAO();
-			TeacherLectureDTO info = lectureDAO.lectureInfo(text, id);
+			TeacherLectureDTO info = lectureDAO.lectureInfo(text, id, request, response);
 			ArrayList<StudentLectureInfoDTO> list = lectureDAO.stuList(text, id, nStuCheck);
 
 			re.append("<div class='card-header mycolor3' style='padding:10px'>" + 

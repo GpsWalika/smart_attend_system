@@ -22,6 +22,8 @@ import model.ControlDAO;
 import model.ControlDTO;
 import model.LectureDAO;
 import model.LectureDTO;
+import model.QnaDAO;
+import model.QnaDTO;
 import model.StudentDAO;
 import model.StudentDTO;
 //import service.Pagination;
@@ -98,7 +100,6 @@ public class StudentController extends HttpServlet {
 	
 	private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		System.out.println(id);
 		dto = dao.detail(id);
 		request.setAttribute("student", dto);
 		String phone[]=dto.getPhone().split("-");
@@ -145,8 +146,7 @@ public class StudentController extends HttpServlet {
 	    	request.setAttribute(partName, partValue);
 	    }
 	    
-    	int result = dao.update(request, response); // 질의를 통해 수정된 레코드의 수
-    	System.out.println("result값: "+result);
+    	int result = dao.update(request, response);
     	if(result > 0) {// 성공 가입
     		request.setAttribute("id", request.getParameter("id"));
     		request.getRequestDispatcher("student-list.do").forward(request, response);
@@ -197,10 +197,11 @@ public class StudentController extends HttpServlet {
     }
 
 	protected void qna(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		if(sesobj.getAttribute("uid") != null && sesobj.getAttribute("name") != null)
-		{
-			dao.list_id((String)sesobj.getAttribute("uid"));
-		}
+		QnaDAO qnadao = new QnaDAO();
+		ArrayList<QnaDTO> qnadtoList = new ArrayList<QnaDTO>();
+		
+		qnadtoList = qnadao.qnalist(request, response);
+		request.setAttribute("dtoList", qnadtoList);
 		request.getRequestDispatcher("st_lecqa.jsp").forward(request, response);
 	}
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

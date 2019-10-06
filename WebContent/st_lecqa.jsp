@@ -111,7 +111,7 @@
 										<h6>&nbsp;<font color="gray">2019년 1학기</font></h6>
 									</div>
 									<div class="col" align="right">
-										<h6>&nbsp;<font color="gray">201912001 홍길동</font>&nbsp;</h6>
+										<h6>&nbsp;<font color="gray">${uid} ${name}</font>&nbsp;</h6>
 									</div>
 								</div>
 
@@ -133,7 +133,22 @@
 										<td>상태</td>
 										<td width="60"></td>
 									</tr>
-									
+									<c:forEach var="dto" items="${dtoList}">
+										<tr>
+											<td>${dto.getDay()}</td>
+											<td>${dto.getLecture().getSubject().getName()}</td>
+											<td>${dto.getTeacher().getName()}</td>
+											<td>${dto.getQatitle() }</td>
+											<td>
+												<c:if test="${dto.getC_confirm() eq true}">
+													답변
+												</c:if>
+											</td>
+											<td>
+												<a href="st_lecqaedit.html" class="btn btn-xs btn-outline-primary">수정</a>
+											</td>
+										</tr>
+									</c:forEach>
 									<tr>
 										<td>2019-06-06</td>
 										<td>PHP</td>

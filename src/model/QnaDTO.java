@@ -2,8 +2,9 @@ package model;
 
 public class QnaDTO {
 	int id;
-	int student_id;
-	int lecture_id;
+	StudentDTO student;
+	LectureDTO lecture;
+	TeacherDTO teacher;
 	String day;
 	String qatitle;
 	String qaask;
@@ -16,17 +17,23 @@ public class QnaDTO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getStudent_id() {
-		return student_id;
+	public StudentDTO getStudent() {
+		return student;
 	}
-	public void setStudent_id(int student_id) {
-		this.student_id = student_id;
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
-	public int getLecture_id() {
-		return lecture_id;
+	public LectureDTO getLecture() {
+		return lecture;
 	}
-	public void setLecture_id(int lecture_id) {
-		this.lecture_id = lecture_id;
+	public void setLecture(LectureDTO lecture) {
+		this.lecture = lecture;
+	}
+	public TeacherDTO getTeacher() {
+		return teacher;
+	}
+	public void setTeacher(TeacherDTO teacher) {
+		this.teacher = teacher;
 	}
 	public String getDay() {
 		return day;
@@ -52,10 +59,12 @@ public class QnaDTO {
 	public void setQaanswer(String qaanswer) {
 		this.qaanswer = qaanswer;
 	}
-	public boolean isC_confirm() {
+	public boolean getC_confirm() {
 		return c_confirm;
 	}
 	public void setC_confirm(boolean c_confirm) {
 		this.c_confirm = c_confirm;
 	}
+	
+	
 }

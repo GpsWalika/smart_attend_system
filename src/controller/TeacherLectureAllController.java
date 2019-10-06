@@ -81,9 +81,10 @@ public class TeacherLectureAllController extends HttpServlet {
 	
 	//telecall -> te_lecall.jsp main화면
 	private void telecall(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		sesobj = request.getSession();
 		DepartDTO dto = new DepartDTO();
 		DepartDAO dao = new DepartDAO();
-		dto.setId(1);
+		dto.setId((int)sesobj.getAttribute("depart_id"));
 		dto = dao.selectOne(dto);
 		char [] str = new char[dto.getClassnum()];
 		
@@ -106,7 +107,7 @@ public class TeacherLectureAllController extends HttpServlet {
 		StringBuffer re = new StringBuffer("");
 		
 		dao = new TeacherLectureAllDAO();
-		ArrayList<SubjectDTO> strList = dao.selectList(values);
+		ArrayList<SubjectDTO> strList = dao.selectList(values, request, response);
 		
 		re.append("<select name='sel5' class='form-control form-control-sm' >");
 		for(int i = 0 ; i < strList.size(); i++) {
