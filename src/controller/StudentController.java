@@ -28,7 +28,7 @@ import model.StudentDTO;
 /**
  * Servlet implementation class StudentController
  */
-@WebServlet({"/student-list.do","/student-search.do","/student-register.do","/student-delete.do","/student-detail.do","/student-update.do",})
+@WebServlet({"/student-list.do","/student-search.do","/student-register.do","/student-delete.do","/student-detail.do","/student-update.do","/student-qna.do",})
 @MultipartConfig(location="", 
 fileSizeThreshold=1024*1024, 
 maxFileSize=1024*1024*5, 
@@ -56,9 +56,7 @@ public class StudentController extends HttpServlet {
 	protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");		
-		sesobj = request.getSession();
-		
-		System.out.println("process");		
+		sesobj = request.getSession();		
 		
 		String uri = request.getRequestURI();
 		int lastIndex = uri.lastIndexOf('/'); 
@@ -76,7 +74,9 @@ public class StudentController extends HttpServlet {
 			update(request, response);
 		else if(action.equals("student-search.do")) 
 			search(request, response);
-    	else 
+		else if(action.equals("student-qna.do"))
+			qna(request,response);
+		else 
     		;
 		
 	}
@@ -196,7 +196,13 @@ public class StudentController extends HttpServlet {
     	return null;
     }
 
-	
+	protected void qna(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		if(sesobj.getAttribute("uid") != null && sesobj.getAttribute("name") != null)
+		{
+			dao.list_id((String)sesobj.getAttribute("uid"));
+		}
+		request.getRequestDispatcher("st_lecqa.jsp").forward(request, response);
+	}
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {
 			process(request,response);

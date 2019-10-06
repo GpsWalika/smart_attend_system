@@ -23,7 +23,7 @@
 	<link href="my/css/dataTables.bootstrap4.min.css" rel="stylesheet">	<!-- datatable.net -->
 
 	<link href="my/css/my.css" rel="stylesheet" type="text/css">
-
+		
 </head>
 
 <body class="adminbody">
@@ -203,7 +203,7 @@
 										<td class="mycolor2" style="vertical-align:middle">날짜</td>
 										<td align="left">
 											<div class="form-inline">
-												<input type="text" name="qawriteday" size="10" value="" class="form-control form-control-sm" readonly>
+												<input type="text" name="qawriteday" size="10" value="2019-06-06" class="form-control form-control-sm" readonly>
 											</div>
 										</td>
 										<td class="mycolor2" style="vertical-align:middle">상태</td>
@@ -258,22 +258,7 @@
 	</footer>
 
 </div>
-	<script>
-		var date = new Date(); 
-		var year = date.getFullYear(); 
-		var month = new String(date.getMonth()+1); 
-		var day = new String(date.getDate()); 
-	
-		// 한자리수일 경우 0을 채워준다. 
-		if(month.length == 1){ 
-		  month = "0" + month; 
-		} 
-		if(day.length == 1){ 
-		  day = "0" + day; 
-		} 
-	
-		form1.qawriteday.value=year+"-"+month+"-"+day;
-	</script>
+
 <!-- js 선언부 ----------------------------------------------------------------->
 <script src="my/js/jquery.min.js"></script>
 <script src="my/js/moment.min.js"></script>
