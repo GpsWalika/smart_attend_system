@@ -4,4 +4,6 @@ encoding//WebContent/common.jsp=UTF-8
 encoding//WebContent/login.jsp=UTF-8
 encoding//WebContent/st_lec.jsp=UTF-8
 encoding//WebContent/st_lecqa.jsp=UTF-8
+encoding//WebContent/st_lecqanew.jsp=UTF-8
+encoding//src/controller/StudentController.java=UTF-8
 encoding/<project>=UTF-8

@@ -120,7 +120,7 @@
 									<div class="col" align="left">
 									</div>
 									<div class="col" align="right">
-										<a href="st_lecqanew.html" class="btn btn-sm mycolor1">추가</a>
+										<a href="lecqnainsert.do" class="btn btn-sm mycolor1">추가</a>
 									</div>
 								</div>
 
@@ -132,15 +132,15 @@
 										<td>제목</td>
 										<td>상태</td>
 										<td width="60"></td>
-									</tr><!-- 
+									</tr>
 									<c:forEach var="dto" items="${dtoList}">
 										<tr>
-											<td>${dto.getDay()}</td>
+											<td>${dto.getQaday()}</td>
 											<td>${dto.getLecture().getSubject().getName()}</td>
 											<td>${dto.getTeacher().getName()}</td>
 											<td>${dto.getQatitle() }</td>
 											<td>
-												<c:if test="${dto.getC_confirm() eq true}">
+												<c:if test="${dto.getQaanswer() ne null}">
 													답변
 												</c:if>
 											</td>
@@ -148,27 +148,7 @@
 												<a href="st_lecqaedit.html" class="btn btn-xs btn-outline-primary">수정</a>
 											</td>
 										</tr>
-									</c:forEach> -->
-									<tr>
-										<td>2019-06-06</td>
-										<td>PHP</td>
-										<td>교수님1</td>
-										<td>출석문의</td>
-										<td></td>
-										<td>
-											<a href="st_lecqaedit.html" class="btn btn-xs btn-outline-primary">수정</a>
-										</td>
-									</tr>
-									<tr>
-										<td>2019-06-02</td>
-										<td>JSP</td>
-										<td>교수님2</td>
-										<td>출석문의</td>
-										<td>답변</td>
-										<td>
-											<a href="st_lecqaedit.html" class="btn btn-xs btn-outline-primary">수정</a>
-										</td>
-									</tr>
+									</c:forEach> 
 								</table>
 								</form>
 

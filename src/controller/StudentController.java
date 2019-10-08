@@ -20,15 +20,20 @@ import javax.servlet.http.Part;
 
 import model.ControlDAO;
 import model.ControlDTO;
+import model.DepartDAO;
+import model.DepartDTO;
 import model.LectureDAO;
 import model.LectureDTO;
+import model.MyLectureDTO;
 import model.StudentDAO;
 import model.StudentDTO;
+import model.TeacherDAO;
+import model.TeacherDTO;
 //import service.Pagination;
 /**
  * Servlet implementation class StudentController
  */
-@WebServlet({"/student-list.do","/student-search.do","/student-register.do","/student-delete.do","/student-detail.do","/student-update.do","/student-qna.do",})
+@WebServlet({"/student-list.do","/student-search.do","/student-register.do","/student-delete.do","/student-detail.do","/student-update.do","/student-qna.do", "/lecqnainsert.do", })
 @MultipartConfig(location="", 
 fileSizeThreshold=1024*1024, 
 maxFileSize=1024*1024*5, 
@@ -76,6 +81,8 @@ public class StudentController extends HttpServlet {
 			search(request, response);
 		else if(action.equals("student-qna.do"))
 			qna(request,response);
+		else if(action.equals("lecqnainsert.do"))
+			qnaadd(request,response);
 		else 
     		;
 		
@@ -195,9 +202,28 @@ public class StudentController extends HttpServlet {
     }
 
 	protected void qna(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		
-		
+		ArrayList<MyLectureDTO> mdtoList = new ArrayList<MyLectureDTO>();
+		mdtoList = dao.qnalist(request, response);
+
+		request.setAttribute("dtoList", mdtoList);
 		request.getRequestDispatcher("st_lecqa.jsp").forward(request, response);
+	}
+	protected void qnaadd(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		TeacherDAO tdao = new TeacherDAO();
+		DepartDAO ddao = new DepartDAO();
+		DepartDTO ddto = new DepartDTO();
+		
+		ArrayList<LectureDTO> ldtoList = dao.lecList(request, response);
+		
+		dto = dao.list_id((String)sesobj.getAttribute("uid"));
+		ddto.setId(dto.getDepart_id());
+		ddto = ddao.selectOne(ddto);
+		
+		request.setAttribute("depart_name", ddto.getName());
+		request.setAttribute("stu", dto);
+		request.setAttribute("leclist", ldtoList);
+		System.out.println(request.getAttribute("depart_name"));
+		request.getRequestDispatcher("st_lecqanew.jsp").forward(request, response);
 	}
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {

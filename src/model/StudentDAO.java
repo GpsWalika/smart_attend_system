@@ -265,6 +265,10 @@ public class StudentDAO extends DAOBase {
 	public ArrayList<MyLectureDTO> qnalist(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession ssion = request.getSession();
 		MyLectureDTO mdto = null;
+		SubjectDTO sdto = null;
+		LectureDTO ldto = null;
+		TeacherDTO tdto = null;
+		
 		ArrayList<MyLectureDTO> dtoList = new ArrayList<MyLectureDTO>();
 		try {
 			conn = getConnection();
@@ -275,8 +279,19 @@ public class StudentDAO extends DAOBase {
 					+ "left join subject on subject.id = lecture.subject_id where student.schoolno='"+ssion.getAttribute("uid")+"'");
 			while(rs.next()) {
 				mdto = new MyLectureDTO();
+				sdto = new SubjectDTO();
+				ldto = new LectureDTO();
+				tdto = new TeacherDTO();
+				sdto.setName(rs.getString("subject_name"));
+				ldto.setSubject(sdto);
 				mdto.setQaday(rs.getDate("mylecture.qaday"));
-				
+				tdto.setName(rs.getString("teacher_name"));
+				mdto.setQatitle(rs.getString("mylecture.qatitle"));
+				mdto.setQaanswer(rs.getString("mylecture.qaanswer"));
+				mdto.setId(rs.getInt("mylecture.id"));
+				mdto.setLecture(ldto);
+				mdto.setTeacher(tdto);
+				dtoList.add(mdto);
 			}
 			return dtoList;
 		} catch (SQLException e) {
@@ -285,6 +300,39 @@ public class StudentDAO extends DAOBase {
 		}
 		
 		return dtoList;
+	}
+	public ArrayList<LectureDTO> lecList(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession ssion = request.getSession();
+		ArrayList<LectureDTO> ldtoList = new ArrayList<LectureDTO>();
+		LectureDTO ldto = null;
+		SubjectDTO sdto = null;
+		TeacherDTO tdto = null;
+//		/
+		ArrayList<MyLectureDTO> dtoList = new ArrayList<MyLectureDTO>();
+		try {//			
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select lecture.id, subject.name, teacher.name from student left join mylecture on mylecture.student_id = student.id "
+					+ "left join lecture on lecture.id = mylecture.lecture_id left join subject on subject.id = lecture.subject_id "
+					+ "left join teacher on teacher.id = lecture.teacher_id where mylecture.qaday is not null and student.schoolno = '"+ssion.getAttribute("uid")+"' and subject.yyyy = 2019;");
+			while(rs.next()) {
+				ldto = new LectureDTO();
+				sdto = new SubjectDTO();
+				tdto = new TeacherDTO();
+				sdto.setName(rs.getString("subject.name"));
+				tdto.setName(rs.getString("teacher.name"));
+				ldto.setSubject(sdto);
+				ldto.setTeacher(tdto);
+				ldto.setId(rs.getInt("lecture.id"));
+				ldtoList.add(ldto);
+			}
+			return ldtoList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ldtoList;
 	}
 
 }

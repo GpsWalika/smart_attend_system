@@ -97,7 +97,22 @@ public class TeacherDAO extends DAOBase {
 		
 		return dto;
 	}
-	
+	public TeacherDTO tinName(int id)
+	{
+		String query = "select teacher.name from lecture left join subject on subject.id = lecture.subject_id left join teacher on teacher.id = lecture.teacher_id where lecture.id = " + id;
+		
+		try {
+			dto = new TeacherDTO();
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			rs.next();
+			dto.setName(rs.getString("teacher.name"));
+		} catch (SQLException e) { e.printStackTrace(); }
+		finally { closeDBResources(rs, stmt, pstmt, conn); }
+		
+		return dto;
+	}
 	public void update(HttpServletRequest request, HttpServletResponse response)
 	{
 		String query = null;
