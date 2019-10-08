@@ -262,5 +262,29 @@ public class StudentDAO extends DAOBase {
 		}
 		return dto;	
 	}
+	public ArrayList<MyLectureDTO> qnalist(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession ssion = request.getSession();
+		MyLectureDTO mdto = null;
+		ArrayList<MyLectureDTO> dtoList = new ArrayList<MyLectureDTO>();
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();	
+			rs = stmt.executeQuery("select mylecture.qaday, subject.name as subject_name, teacher.name as teacher_name, mylecture.qatitle, "
+					+ "mylecture.qaanswer, mylecture.id from student left join mylecture on student.id = mylecture.student_id "
+					+ "left join lecture on lecture.id = mylecture.lecture_id left join teacher on teacher.id = lecture.teacher_id "
+					+ "left join subject on subject.id = lecture.subject_id where student.schoolno='"+ssion.getAttribute("uid")+"'");
+			while(rs.next()) {
+				mdto = new MyLectureDTO();
+				mdto.setQaday(rs.getDate("mylecture.qaday"));
+				
+			}
+			return dtoList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return dtoList;
+	}
 
 }

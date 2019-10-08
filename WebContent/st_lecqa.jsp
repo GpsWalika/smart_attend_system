@@ -132,7 +132,7 @@
 										<td>제목</td>
 										<td>상태</td>
 										<td width="60"></td>
-									</tr>
+									</tr><!-- 
 									<c:forEach var="dto" items="${dtoList}">
 										<tr>
 											<td>${dto.getDay()}</td>
@@ -148,7 +148,7 @@
 												<a href="st_lecqaedit.html" class="btn btn-xs btn-outline-primary">수정</a>
 											</td>
 										</tr>
-									</c:forEach>
+									</c:forEach> -->
 									<tr>
 										<td>2019-06-06</td>
 										<td>PHP</td>

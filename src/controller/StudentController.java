@@ -22,8 +22,6 @@ import model.ControlDAO;
 import model.ControlDTO;
 import model.LectureDAO;
 import model.LectureDTO;
-import model.QnaDAO;
-import model.QnaDTO;
 import model.StudentDAO;
 import model.StudentDTO;
 //import service.Pagination;
@@ -197,11 +195,8 @@ public class StudentController extends HttpServlet {
     }
 
 	protected void qna(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		QnaDAO qnadao = new QnaDAO();
-		ArrayList<QnaDTO> qnadtoList = new ArrayList<QnaDTO>();
 		
-		qnadtoList = qnadao.qnalist(request, response);
-		request.setAttribute("dtoList", qnadtoList);
+		
 		request.getRequestDispatcher("st_lecqa.jsp").forward(request, response);
 	}
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
