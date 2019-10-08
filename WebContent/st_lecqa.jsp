@@ -145,7 +145,14 @@
 												</c:if>
 											</td>
 											<td>
-												<a href="st_lecqaedit.html" class="btn btn-xs btn-outline-primary">수정</a>
+												<c:choose>
+													<c:when test="${dto.getQaanswer() ne null}">
+														<a href="stqaload.do?qa=${dto.getId()}" class="btn btn-xs btn-outline-primary">보기</a>
+													</c:when>
+													<c:otherwise>
+														<a href="stqaload.do?qa=${dto.getId()}" class="btn btn-xs btn-outline-primary">수정</a>
+													</c:otherwise>
+												</c:choose>
 											</td>
 										</tr>
 									</c:forEach> 

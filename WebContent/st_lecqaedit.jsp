@@ -5,6 +5,9 @@
 <!-- 교수 : 윤형태 (2019.5 -        )                                                                         -->
 <!-- 학생 : 유소영(3), 김해리(3), 이민호(2), 김진혁(2)                                              -->
 <!-------------------------------------------------------------------------------->	
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -68,78 +71,7 @@
 	
  
 	<!-- 좌측 Sidebar 메뉴 시작-->
-	<div class="left main-sidebar">
-		<div class="sidebar-inner leftscroll">
-			<div id="sidebar-menu">
-				<ul>
-
-					<li class="submenu">
-						<a href="#"><i class="fa fa-fw fa-table"></i> <span> 직원(학사행정) </span> <span class="menu-arrow"></span></a>
-						<ul class="list-unstyled">
-							<li><a href="ad_main.html" style="padding:5px 0 5px 40px;">직원 메인</a></li>
-							<li><a href="ad_control.html" style="padding:5px 0 5px 40px;">제어판</a></li>
-							<li><a href="ad_notice.html" style="padding:5px 0 5px 40px;">공지사항</a></li>
-							<li><hr style="background-color:gray;margin:0 25px 0 25px;"></li>
-							<li><a href="ad_student.html" style="padding:5px 0 5px 40px;">학생정보</a></li>
-							<li><a href="ad_teacher.html" style="padding:5px 0 5px 40px;">교수정보</a></li>
-							<li><a href="ad_assist.html" style="padding:5px 0 5px 40px;">조교정보</a></li>
-							<li><hr style="background-color:gray;margin:0 25px 0 25px;"></li>
-							<li><a href="ad_depart.html" style="padding:5px 0 5px 40px;">학과/부서</a></li>
-							<li><a href="ad_room.html" style="padding:5px 0 5px 40px;">강의실</a></li>
-							<li><a href="ad_building.html "style="padding:5px 0 5px 40px;">건물</a></li>
-							<li><a href="ad_holiday.html" style="padding:5px 0 5px 40px;">휴일</a></li>
-						</ul>
-					</li>
-					<li class="submenu">
-						<a href="#"><i class="fa fa-fw fa-table"></i> <span> 직원(전자출석) </span> <span class="menu-arrow"></span></a>
-						<ul class="list-unstyled">
-							<li><a href="ad_timeall.html" style="padding:5px 0 5px 40px;">학과별 시간표</a></li>
-							<li><a href="ad_timeteacher.html" style="padding:5px 0 5px 40px;">교수별 강의현황</a></li>
-							<li><a href="ad_lecmove.html" style="padding:5px 0 5px 40px;">휴보강</a></li>
-						</ul>
-					</li>
-					<li class="submenu">
-						<a href="#"><i class="fa fa-fw fa-male"></i> <span>조교</span> <span class="menu-arrow"></span></a>
-						<ul class="list-unstyled">
-							<li><a href="as_main.html" style="padding:5px 0 5px 40px;">조교 메인</a></li>
-							<li><a href="as_sub.html" style="padding:5px 0 5px 40px;">학년별 교과목</a></li>
-							<li><a href="as_lec.html" style="padding:5px 0 5px 40px;">반별 교과목</a></li>
-							<li><a href="as_time.html" style="padding:5px 0 5px 40px;">시간표 작성</a></li>
-							<li><a href="as_timeall.html" style="padding:5px 0 5px 40px;">학과별 시간표</a></li>
-							<li><a href="as_lecall.html" style="padding:5px 0 5px 40px;">과목별 출석부</a></li>
-							<li><a href="as_lecmove.html" style="padding:5px 0 5px 40px;">휴보강</a></li>
-						</ul>
-					</li>
-					<li class="submenu">
-						<a href="#"><i class="fa fa-fw fa-user"></i> <span> 교수 </span> <span class="menu-arrow"></span></a>
-						<ul class="list-unstyled">
-							<li><a href="te_main.html" style="padding:5px 0 5px 40px;">교수 메인</a></li>
-							<li><a href="te_time.html" style="padding:5px 0 5px 40px;">시간표</a></li>
-							<li><a href="te_lec.html" style="padding:5px 0 5px 40px;">일별 출석부</a></li>
-							<li><a href="te_lecall.html" style="padding:5px 0 5px 40px;">과목별 출석부</a></li>
-							<li><a href="te_lecmove.html" style="padding:5px 0 5px 40px;">휴보강</a></li>
-							<li><a href="te_lecqa.html" style="padding:5px 0 5px 40px;">교과목 문의</a></li>
-						</ul>
-					</li>
-					<li class="submenu">
-						<a href="#"><i class="fa fa-fw fa-table"></i> <span> 학생 </span> <span class="menu-arrow"></span></a>
-						<ul class="list-unstyled">
-							<li><a href="st_main.html" style="padding:5px 0 5px 40px;">학생 메인</a></li>
-							<li><a href="st_time.html" style="padding:5px 0 5px 40px;">시간표</a></li>
-							<li><a href="st_lecall.html" style="padding:5px 0 5px 40px;">출석부</a></li>
-							<li><hr style="background-color:gray;margin:0 25px 0 25px;"></li>
-							<li><a href="st_lec.html" style="padding:5px 0 5px 40px;">수강신청</a></li>
-							<li><a href="st_lecsj.html" style="padding:5px 0 5px 40px;">수강과목</a></li>
-							<li><a href="st_lecqa.html" style="padding:5px 0 5px 40px;">교과목 문의</a></li>
-						</ul>
-					</li>
-
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-	</div>
+	<%@ include file="main_menu.jsp" %>
 	<!-- 좌측 Sidebar 메뉴 끝-->
 
     <div class="content-page">
@@ -177,7 +109,7 @@
 										<h6>&nbsp;<font color="gray">2019년 1학기</font></h6>
 									</div>
 									<div class="col" align="right">
-										<h6>&nbsp;<font color="gray">201912001 홍길동</font>&nbsp;</h6>
+										<h6>&nbsp;<font color="gray">${uid} ${name}</font>&nbsp;</h6>
 									</div>
 								</div>
 
@@ -186,15 +118,21 @@
 								<table class="table table-bordered mytable-centermiddle" style="width:100%;">
 									<tr>
 										<td class="mycolor2" style="vertical-align:middle">교과목</td>
-										<td align="left">PHP</td>
+										<td align="left">${sub.getName()}</td>
 									</tr>
 									<tr>
 										<td class="mycolor2" style="vertical-align:middle">교수님</td>
-										<td align="left">교수님1</td>
+										<td align="left">${tea.getName()}</td>
 									</tr>
 									<tr>
 										<td class="mycolor2" style="vertical-align:middle">학생</td>
-										<td align="left">컴퓨터소프트에워학과<br> 2학년 A반 201912001 홍길동<br><i class="fa fa-phone fa-x2"></i> 010-1111-2222</td>
+										<td align="left">${tea.getDepart_id().getName()}<br> ${stu.getGrade()}학년 ${stu.getStudent_class()}반 ${name}<br>
+											<i class="fa fa-phone fa-x2">
+												${fn:substring(stu.getPhone(),0,3)} -
+												${fn:substring(stu.getPhone(),3,7)} -
+												${fn:substring(stu.getPhone(),7,11)}
+											</i>
+										</td>
 									</tr>
 								</table>
 
@@ -203,36 +141,60 @@
 										<td class="mycolor2" style="vertical-align:middle">날짜</td>
 										<td align="left">
 											<div class="form-inline">
-												<input type="text" name="qawriteday" size="10" value="2019-06-06" class="form-control form-control-sm" readonly>
+												<input type="text" name="qawriteday" size="10" value="${dto.getQaday()}" class="form-control form-control-sm" readonly>
 											</div>
 										</td>
 										<td class="mycolor2" style="vertical-align:middle">상태</td>
-										<td align="left" style="text-align:center;vertical-align:middle">&nbsp;</td>
+										<td align="left" style="text-align:center;vertical-align:middle">
+											<c:if test="${dto.getQaanswer() ne null}">
+												답변
+											</c:if>
+										</td>
 									</tr>
 									<tr>
 										<td class="mycolor2" style="vertical-align:middle">제목</td>
 										<td align="left" colspan="3">
-											<input type="text" name="qatitle" value="" class="form-control form-control-sm">
+											<c:choose>
+												<c:when test="${dto.getQaanswer() ne null}">
+													<input type="text" name="qatitle" value="${dto.getQatitle()}" class="form-control form-control-sm" readonly>
+												</c:when>
+												<c:otherwise>
+													<input type="text" name="qatitle" value="${dto.getQatitle()}" class="form-control form-control-sm">
+												</c:otherwise>
+											</c:choose>
 										</td>
 									</tr>
 									<tr>
 										<td class="mycolor2" style="vertical-align:middle">질문</td>
 										<td align="left" colspan="3">
-											<textarea name="qatxt1" rows="5" class="form-control form-control-sm"></textarea>
+											<c:choose>
+												<c:when test="${dto.getQaanswer() ne null}">
+													<textarea name="qatxt1" rows="5" class="form-control form-control-sm" readonly>${dto.getQaask()}</textarea>
+												</c:when>
+												<c:otherwise>
+													<textarea name="qatxt1" rows="5" class="form-control form-control-sm">${dto.getQaask()}</textarea>
+												</c:otherwise>
+											</c:choose>
 										</td>
 									</tr>
-
 									<tr>
 										<td class="mycolor2" style="vertical-align:middle">답변</td>
 										<td align="left" colspan="3">
-											<textarea name="qatxt2" rows="5" class="form-control form-control-sm" readonly></textarea>
+
+											<textarea name="qatxt2" rows="5" class="form-control form-control-sm" readonly>${dto.getQaanswer()}</textarea>
+
 										</td>
 									</tr>
 
 								</table>
 
 								<div align="center">
-									<input type="submit" value="저장" class="btn btn-sm mycolor1">&nbsp;
+									<c:choose>
+										<c:when test="${dto.getQaanswer() eq null}">
+											<input type="submit" value="저장" class="btn btn-sm mycolor1">&nbsp;
+										</c:when>
+									</c:choose>
+									
 									<input type="button" value="이전화면" class="btn btn-sm mycolor1" onclick="history.back();">
 								</div>
 

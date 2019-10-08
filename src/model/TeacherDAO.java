@@ -75,27 +75,62 @@ public class TeacherDAO extends DAOBase {
 		String query = "select teacher.*, depart.id, depart.name from teacher left join depart on teacher.depart_id = depart.id where teacher.id = "+id+";";
 		dtoDepart = new DepartDTO();
 		try {
+			dto = new TeacherDTO();
 			dtoListDepart = new ArrayList<DepartDTO>();
 			conn = getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
-			rs.next();
-			dto.setId(id);
-			dto.setKind(rs.getString("kind"));
-			dtoDepart.setName(rs.getString("depart.name"));
-			dtoDepart.setId(Integer.parseInt(rs.getString("depart.id")));
-			dto.setDepart_id(dtoDepart);
-			dto.setUid(rs.getString("uid"));
-			dto.setPwd(rs.getString("pwd"));
-			dto.setName(rs.getString("name"));
-			dto.setTel(rs.getString("tel"));
-			dto.setPhone(rs.getString("phone"));
-			dto.setEmail(rs.getString("email"));
-			dto.setPic(rs.getString("pic"));
+			if(rs.next()) {
+				dto.setId(id);
+				dto.setKind(rs.getString("kind"));
+				dtoDepart.setName(rs.getString("depart.name"));
+				dtoDepart.setId(Integer.parseInt(rs.getString("depart.id")));
+				dto.setDepart_id(dtoDepart);
+				dto.setUid(rs.getString("uid"));
+				dto.setPwd(rs.getString("pwd"));
+				dto.setName(rs.getString("name"));
+				dto.setTel(rs.getString("tel"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setEmail(rs.getString("email"));
+				dto.setPic(rs.getString("pic"));
+				return dto;
+			}
 		} catch (SQLException e) { e.printStackTrace(); }
 		finally { closeDBResources(rs, stmt, pstmt, conn); }
 		
-		return dto;
+		return null;
+	}
+	public TeacherDTO teacherqalist(String name, String uid)
+	{
+		String query = "select teacher.*, depart.id, depart.name from teacher left join depart on teacher.depart_id = depart.id "
+				+ "where teacher.uid='"+uid+"' and teacher.name='"+name+"'";
+		
+		dtoDepart = new DepartDTO();
+		try {
+			dto = new TeacherDTO();
+			dtoListDepart = new ArrayList<DepartDTO>();
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			if(rs.next()) {
+				dto.setId(rs.getInt("teacher.id"));
+				dto.setKind(rs.getString("kind"));
+				dtoDepart.setName(rs.getString("depart.name"));
+				dtoDepart.setId(Integer.parseInt(rs.getString("depart.id")));
+				dto.setDepart_id(dtoDepart);
+				dto.setUid(rs.getString("uid"));
+				dto.setPwd(rs.getString("pwd"));
+				dto.setName(rs.getString("name"));
+				dto.setTel(rs.getString("tel"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setEmail(rs.getString("email"));
+				dto.setPic(rs.getString("pic"));
+				return dto;
+			}
+		} catch (SQLException e) { e.printStackTrace(); }
+		finally { closeDBResources(rs, stmt, pstmt, conn); }
+		
+		return null;
 	}
 	public TeacherDTO tinName(int id)
 	{

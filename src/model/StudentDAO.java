@@ -307,14 +307,13 @@ public class StudentDAO extends DAOBase {
 		LectureDTO ldto = null;
 		SubjectDTO sdto = null;
 		TeacherDTO tdto = null;
-//		/
-		ArrayList<MyLectureDTO> dtoList = new ArrayList<MyLectureDTO>();
+
 		try {//			
 			conn = getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select lecture.id, subject.name, teacher.name from student left join mylecture on mylecture.student_id = student.id "
 					+ "left join lecture on lecture.id = mylecture.lecture_id left join subject on subject.id = lecture.subject_id "
-					+ "left join teacher on teacher.id = lecture.teacher_id where mylecture.qaday is not null and student.schoolno = '"+ssion.getAttribute("uid")+"' and subject.yyyy = 2019;");
+					+ "left join teacher on teacher.id = lecture.teacher_id where mylecture.qaday not null and student.schoolno = '"+ssion.getAttribute("uid")+"' and subject.yyyy = 2019;");
 			while(rs.next()) {
 				ldto = new LectureDTO();
 				sdto = new SubjectDTO();
@@ -333,6 +332,16 @@ public class StudentDAO extends DAOBase {
 		}
 		
 		return ldtoList;
+	}//saveqa
+	public void saveqa(HttpServletRequest request, HttpServletResponse response) {
+		try {//		qaday, qatitle, qaask	
+			conn = getConnection();
+			stmt = conn.createStatement();
+			stmt.executeUpdate("update mylecture set qaday='"+request.getParameter("qawriteday")+"', qatitle='"+request.getParameter("qatitle")+"', qaask='"+request.getParameter("qatxt1")+"';");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
 }

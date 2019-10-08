@@ -10,6 +10,7 @@
 <% request.setCharacterEncoding("utf-8"); %>
 <% response.setContentType("text/html; charset=utf-8"); %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -115,13 +116,13 @@
 									</div>
 								</div>
 
-								<form name="form1" method="post" action="">
-
+								<form name="form1" method="post" action="savestqa.do">
+								<input type="hidden" name="mylecture" value="${stu.getId()}">
 								<table class="table table-bordered mytable-centermiddle" style="width:100%;">
 									<tr>
 										<td class="mycolor2" style="vertical-align:middle">교과목</td>
 										<td align="left">
-											<select class="custom-select" style="align:center" onchange="qalecture();">
+											<select id="lecture" class="custom-select" style="align:center" onchange="qalecture();">
 												<option value="">선택하세요</option>
 												<c:forEach var="i" items="${leclist}">
 													<option value="${i.getId()}^^${i.getTeacher().getName()}">${i.getSubject().getName()}</option>
@@ -131,12 +132,17 @@
 									</tr>
 									<tr>
 										<td class="mycolor2" style="vertical-align:middle">교수님</td>
-										<td align="left" id="te">1</td>
+										<td align="left" id="te"></td>
 									</tr>
 
 									<tr>
 										<td class="mycolor2" style="vertical-align:middle">학생</td>
-										<td align="left">컴퓨터소프트에워학과<br> 2학년 A반 201912001 홍길동<br><i class="fa fa-phone fa-x2"></i> 010-1111-2222</td>
+										<td align="left">${depart_name}<br> ${stu.getGrade()}학년 ${stu.getStudent_class()}반 ${uid} ${name} <br>
+										<i class="fa fa-phone fa-x2"></i> 
+											${fn:substring(stu.getPhone(),0,3)} -
+											${fn:substring(stu.getPhone(),3,7)} -
+											${fn:substring(stu.getPhone(),7,11)}
+										</td>
 									</tr>
 								</table>
 
@@ -163,18 +169,10 @@
 											<textarea name="qatxt1" rows="5" class="form-control form-control-sm"></textarea>
 										</td>
 									</tr>
-
-									<tr>
-										<td class="mycolor2" style="vertical-align:middle">답변</td>
-										<td align="left" colspan="3">
-											<textarea name="qatxt2" rows="5" class="form-control form-control-sm" readonly></textarea>
-										</td>
-									</tr>
-
 								</table>
 
 								<div align="center">
-									<input type="submit" value="저장" class="btn btn-sm mycolor1">&nbsp;
+									<input type="button" onclick="check()" value="저장" class="btn btn-sm mycolor1">&nbsp;
 									<input type="button" value="이전화면" class="btn btn-sm mycolor1" onclick="history.back();">
 								</div>
 
@@ -215,15 +213,27 @@
 		} 
 	
 		form1.qawriteday.value=year+"-"+month+"-"+day;
-		
-	</script>
-	<script>
 		var qalecture = function() {
-			let name = document.querySelector('select').value.split('^^');
-			document.getElementById('te').innerText = name[1];
+			
+			let name = document.querySelector('select').value;
+			if(name === "")
+				document.getElementById('te').innerText = "";
+			
+			
+			else{
+				name = name.split('^^');
+				document.getElementById('te').innerText = name[1];
+			}
 		};
-
-	</script>
+		function check(){
+			if(document.querySelector('select').value == "")
+			{ alert('과목을 선택해주세요'); return false;}
+			else if(form1.qatitle.value == "")
+			{ alert('제목을 입력해주세요'); return false;}
+			else if(form1.qatxt1.value == "")
+			{ alert('질문 내용을 입력해주세요'); return false;}
+			form1.submit();
+		}
 	</script>
 <!-- js 선언부 ----------------------------------------------------------------->
 <script src="my/js/jquery.min.js"></script>

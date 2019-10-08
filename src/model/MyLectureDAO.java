@@ -75,4 +75,69 @@ public class MyLectureDAO extends DAOBase{
 		}
 		return dtoList;	
 	}
+	public MyLectureDTO qainfo(int id) {
+		dto = new MyLectureDTO();
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select * from mylecture where id='"+id+"'");
+			if(rs.next())
+			{
+				dto.setId(rs.getInt("id"));
+				dto.setStudent_id(rs.getInt("student_id"));
+				dto.setLecture_id(rs.getInt("lecture_id"));
+				dto.setQaday(rs.getDate("qaday"));
+				dto.setQatitle(rs.getString("qatitle"));
+				dto.setQaask(rs.getString("qaask"));
+				dto.setQaanswer(rs.getString("qaanswer"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	public ArrayList<MyLectureDTO> findstu(ArrayList<LectureDTO> ldtolist) {
+		StudentDTO stdto = null;
+		LectureDTO ledto = null;
+		SubjectDTO sbdto = null;
+		ArrayList<MyLectureDTO> mdtolist = new ArrayList<MyLectureDTO>();
+		String where = "";
+		for(int i = 0; i <ldtolist.size(); i++) {
+			where += "mylecture.lecture_id="+ldtolist.get(i).getId();
+			if(i < ldtolist.size() - 1)
+				where += " or ";
+		}
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select * from mylecture left join student on student.id = mylecture.student_id "
+					+ "left join lecture on lecture.id = mylecture.lecture_id left join subject on subject.id = lecture.subject_id where mylecture.qaday is not null and " + where);
+			while(rs.next())
+			{
+				dto = new MyLectureDTO();
+				stdto = new StudentDTO();
+				ledto = new LectureDTO();
+				sbdto = new SubjectDTO();
+				sbdto.setName(rs.getString("subject.name"));
+				
+				ledto.setSubject(sbdto);
+				stdto.setName(rs.getString("student.name"));
+				dto.setId(rs.getInt("id"));
+				dto.setStudent(stdto);
+				dto.setLecture(ledto);
+				dto.setQaday(rs.getDate("qaday"));
+				dto.setQatitle(rs.getString("qatitle"));
+				dto.setQaask(rs.getString("qaask"));
+				dto.setQaanswer(rs.getString("qaanswer"));
+				mdtolist.add(dto);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mdtolist;
+	}
 }
