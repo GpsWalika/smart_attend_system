@@ -25,7 +25,7 @@ import model.TeacherDTO;
  * Servlet implementation class TeacherController
  */
 //"/building-register.do", "/building-list.do", "/building-info.do", "/building-delete.do", "/building-update.do", "/building-search.do"
-@WebServlet({"/teacher-inputdata.do", "/teacher-info.do", "/teacher-register.do", "/teacher-list.do", "/teacher-delete.do", "/teacher-update.do", "/teacher-qalist.do", "/te-lec-qaans.do", "te-answer-save.do", })
+@WebServlet({"/teacher-inputdata.do", "/teacher-info.do", "/teacher-register.do", "/teacher-list.do", "/teacher-delete.do", "/teacher-update.do", "/teacher-qalist.do", "/te-lec-qaans.do", "/te-answer-save.do", })
 
 public class TeacherController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -132,7 +132,6 @@ public class TeacherController extends HttpServlet {
 		LectureDAO ldao = new LectureDAO();
 		
 		dto = dao.teacherqalist((String)sesobj.getAttribute("name"), (String)sesobj.getAttribute("uid"));
-		System.out.println(dto.getId());
 		ArrayList<LectureDTO> ldtolist = ldao.lecture_tsearch_qa(dto.getId());
 		MyLectureDAO mdao = new MyLectureDAO();
 		ArrayList<MyLectureDTO> mdtolist = mdao.findstu(ldtolist);

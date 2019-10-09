@@ -129,10 +129,10 @@
 											<td>
 												<c:choose>
 													<c:when test="${dto.getQaanswer() eq null}">
-														<font color="red"><b>문의</b></font>
+														문의
 													</c:when>
 													<c:otherwise>
-														답변
+														<font color="red"><b>답변</b></font>
 													</c:otherwise>
 												</c:choose>
 											</td>
