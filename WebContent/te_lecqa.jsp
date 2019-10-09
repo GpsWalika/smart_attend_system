@@ -137,7 +137,7 @@
 												</c:choose>
 											</td>
 											<td>
-												<a href="te_lecqaedit.html" class="btn btn-xs btn-outline-primary">수정</a>
+												<a href="te-lec-qaans.do?id=${dto.getId()}" class="btn btn-xs btn-outline-primary">수정</a>
 											</td>
 										</tr>
 									</c:forEach>

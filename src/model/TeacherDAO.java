@@ -208,6 +208,19 @@ public class TeacherDAO extends DAOBase {
 		}catch(SQLException e) { e.printStackTrace(); }
 		finally {closeDBResources(rs,stmt, pstmt, conn);}
 	}
+	
+	public void saveqa(HttpServletRequest request, HttpServletResponse response) {
+		try {//		qaday, qatitle, qaask	
+			conn = getConnection();
+			stmt = conn.createStatement();
+			stmt.executeUpdate("update mylecture set qaanswer = '"+request.getParameter("qatxt2")+"' where id = '"+request.getParameter("id")+"';");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void closeDBResources(ResultSet rs, Statement stmt, PreparedStatement pstmt, Connection conn) {
 		if(rs != null) {
 			try {

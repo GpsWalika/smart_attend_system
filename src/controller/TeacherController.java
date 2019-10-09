@@ -25,7 +25,7 @@ import model.TeacherDTO;
  * Servlet implementation class TeacherController
  */
 //"/building-register.do", "/building-list.do", "/building-info.do", "/building-delete.do", "/building-update.do", "/building-search.do"
-@WebServlet({"/teacher-inputdata.do", "/teacher-info.do", "/teacher-register.do", "/teacher-list.do", "/teacher-delete.do", "/teacher-update.do", "/teacher-qalist.do"})
+@WebServlet({"/teacher-inputdata.do", "/teacher-info.do", "/teacher-register.do", "/teacher-list.do", "/teacher-delete.do", "/teacher-update.do", "/teacher-qalist.do", "/te-lec-qaans.do", "te-answer-save.do", })
 
 public class TeacherController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -68,6 +68,10 @@ public class TeacherController extends HttpServlet {
 			inputdata(request,response);
 		}else if(action.equals("teacher-qalist.do"))
 			qalist(request, response);
+		else if(action.equals("te-lec-qaans.do"))
+			qaans(request, response);
+		else if(action.equals("te-answer-save.do"))
+			qasave(request, response);
 		else
 			;
 		
@@ -136,6 +140,19 @@ public class TeacherController extends HttpServlet {
 		request.setAttribute("dtolist", mdtolist);
 	    request.getRequestDispatcher("te_lecqa.jsp").forward(request, response);
 	}
+	
+	private void qaans(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		MyLectureDAO mdao = new MyLectureDAO();
+		
+		request.setAttribute("info", mdao.teqaansinfo(Integer.parseInt(request.getParameter("id"))));
+	    request.getRequestDispatcher("te_lecqaedit.jsp").forward(request, response);
+	}
+	
+	private void qasave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+		dao.saveqa(request, response);
+	    response.sendRedirect("teacher-qalist.do");
+	}
+	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {
     		request.setCharacterEncoding("UTF-8");
