@@ -211,9 +211,10 @@ public class TeacherDAO extends DAOBase {
 	
 	public void saveqa(HttpServletRequest request, HttpServletResponse response) {
 		try {//		qaday, qatitle, qaask	
+			String str = request.getParameter("qatxt2").replace("\\", "\\\\");
 			conn = getConnection();
 			stmt = conn.createStatement();
-			stmt.executeUpdate("update mylecture set qaanswer = '"+request.getParameter("qatxt2")+"' where id = '"+request.getParameter("id")+"';");
+			stmt.executeUpdate("update mylecture set qaanswer = '"+str+"' where id = '"+request.getParameter("id")+"';");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
