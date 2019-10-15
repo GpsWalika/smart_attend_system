@@ -104,7 +104,7 @@
 										<h3><i class="fa fa-table"></i> 공지사항 </h3>
 									</div>
 									<div class="col" align="right">
-										<h3>교수님1</h3>
+										<h3>${name } 교수님</h3>
 									</div>
 								</div>
 							</div>
@@ -116,13 +116,15 @@
 										<td>제목</td>
 										<td width="60"></td>
 									</tr>
-									<tr>
-										<td>2019-06-06</td>
-										<td style="text-align:left">수강신청기간 공지</td>
+									<c:forEach var="dto" items="${ noticeList }">
+										<tr>
+											<td>${ dto.writeday }</td>
+										<td style="text-align:left">${ dto.title }</td>
 										<td>
-											<a href="" class="btn btn-xs btn-outline-primary">보기</a>
+											<a href="notice-view.do?id=${ dto.id }" class="btn btn-xs btn-outline-primary">보기</a>
 										</td>
-									</tr>
+										</tr>
+									</c:forEach>
 								</table>
 
 								<ul class='pagination pagination-sm justify-content-center'>
@@ -171,24 +173,33 @@
 										<td>보강날짜</td>
 										<td>보강교시</td>
 										<td>보강강의실</td>
-										<td>처리상태</td>
-										<td>학과장</td>									
+										<td>처리상태</td>									
 									</tr>
-									<tr>
-										<td>컴소과</td>
-										<td>교수님1</td>
-										<td>PHP</td>
-										<td>2학년/A반</td>
-										<td class="mycolor4">2019-03-12</td>
-										<td class="mycolor4">3, 4 교시</td>
-										<td class="mycolor3">2019-06-15</td>
-										<td class="mycolor3">1, 2 교시</td>
-										<td class="mycolor3">인관 컴퓨터실1</td>
-										<td><font color="red"><b>신청</b></font></td>
-										<td>
-											<a href="" class="btn btn-xs btn-outline-primary">보기</a>
-										</td>
-									</tr>
+									<!-- 0 신청 or 1 취소 or 2 학과장승인 or 3 반려 or 4 최종승인 -->
+									<c:forEach var="item" items="${removeList}">
+										<tr>
+											<td>${item.getDepart()}</td>
+											<td>${item.getTeacher_id().getName()}</td>
+											<td>${item.getSubject_name()}</td>
+											<td>${item.getGrade()}학년/${item.get_class()}반</td>
+											<td class="mycolor4">${item.getNormdate()}</td>
+											<td class="mycolor4">
+												<c:forEach var="i" begin="${item.getNormstart() - 8}" end="${item.getNormhour() + item.getNormstart() - 9}" varStatus="status">
+													${i}<c:if test="${i ne status.end}">,</c:if>
+												</c:forEach>
+												교시
+											</td>
+											<td class="mycolor3">${item.getRestdate()}</td>
+											<td class="mycolor3">
+												<c:forEach var="i" begin="${item.getReststart() - 8}" end="${item.getResthour() + item.getReststart() - 9}" varStatus="status">
+													${i}<c:if test="${i ne status.end}">,</c:if>
+												</c:forEach>
+												교시
+											</td>
+											<td class="mycolor3">${item.getBuildName()} ${item.getRoomName()}</td>
+											<td><b>${item.getState()}</b></td>
+										</tr>
+									</c:forEach>
 								</table>
 
 								<ul class='pagination pagination-sm justify-content-center'>
@@ -236,26 +247,27 @@
 										<td>상태</td>
 										<td width="60"></td>
 									</tr>
-									<tr>
-										<td>2019-06-06</td>
-										<td>PHP</td>
-										<td style="text-align:left">출석문의</td>
-										<td>홍길동</td>
-										<td><font color="red"><b>문의</b></font></td>
-										<td>
-											<a href="te_lecqaedit.html" class="btn btn-xs btn-outline-primary">보기</a>
-										</td>
-									</tr>
-									<tr>
-										<td>2019-06-02</td>
-										<td>PHP</td>
-										<td style="text-align:left">출석문의</td>
-										<td>홍길동</td>
-										<td><font color="blue"><b>답변</b></font></td>
-										<td>
-											<a href="te_lecqaedit.html" class="btn btn-xs btn-outline-primary">보기</a>
-										</td>
-									</tr>
+									<c:forEach var="dto" items="${qaList}">
+										<tr>
+											<td>${dto.getQaday()}</td>
+											<td>${dto.getLecture().getSubject().getName()}</td>
+											<td>${dto.getQatitle()}</td>
+											<td>${dto.getStudent().getName()}</td>
+											<td>
+												<c:choose>
+													<c:when test="${dto.getQaanswer() eq null}">
+														문의
+													</c:when>
+													<c:otherwise>
+														<font color="red"><b>답변</b></font>
+													</c:otherwise>
+												</c:choose>
+											</td>
+											<td>
+												<a href="te-lec-qaans.do?id=${dto.getId()}" class="btn btn-xs btn-outline-primary">보기</a>
+											</td>
+										</tr>
+									</c:forEach>
 								</table>
 
 								<nav>

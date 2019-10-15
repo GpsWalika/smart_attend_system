@@ -12,12 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.ADRemoveDAO;
+import model.ADRemoveDTO;
+import model.ControlDAO;
+import model.ControlDTO;
 import model.DepartDAO;
 import model.DepartDTO;
 import model.LectureDAO;
 import model.LectureDTO;
 import model.MyLectureDAO;
 import model.MyLectureDTO;
+import model.NoticeDAO;
+import model.NoticeDTO;
 import model.TeacherDAO;
 import model.TeacherDTO;
 
@@ -137,7 +143,7 @@ public class TeacherController extends HttpServlet {
 		ArrayList<LectureDTO> ldtolist = ldao.lecture_tsearch_qa(dto.getId());
 		MyLectureDAO mdao = new MyLectureDAO();
 		ArrayList<MyLectureDTO> mdtolist = mdao.findstu(ldtolist);
-		
+		System.out.println(mdtolist.size());
 		request.setAttribute("dtolist", mdtolist);
 	    request.getRequestDispatcher("te_lecqa.jsp").forward(request, response);
 	}
@@ -155,9 +161,28 @@ public class TeacherController extends HttpServlet {
 	}
 	
 	private void temain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
-		//MyLectureDAO mdao = new MyLectureDAO();
+		sesobj = request.getSession();
+		//공지사항
+		NoticeDAO ndao = new NoticeDAO();
+		ArrayList<NoticeDTO> NoticeList = ndao.list(null);
+		request.setAttribute("noticeList", NoticeList);
 		
-		//request.setAttribute("info", mdao.teqaansinfo(Integer.parseInt(request.getParameter("id"))));
+		//휴보강
+		ADRemoveDAO adao = new ADRemoveDAO();
+		ArrayList<ADRemoveDTO> adtoList = adao.DTOlist2(request, response);
+		
+		request.setAttribute("removeList", adtoList);
+		//qa
+		sesobj = request.getSession();
+		LectureDAO ldao = new LectureDAO();
+		
+		dto = dao.teacherqalist((String)sesobj.getAttribute("name"), (String)sesobj.getAttribute("uid"));
+		ArrayList<LectureDTO> ldtolist = ldao.lecture_tsearch_qa(dto.getId());
+		MyLectureDAO mdao = new MyLectureDAO();
+		ArrayList<MyLectureDTO> mdtolist = mdao.findstu(ldtolist);
+		
+		request.setAttribute("qaList", mdtolist);
+		
 	    request.getRequestDispatcher("te_main.jsp").forward(request, response);
 	}
 	
