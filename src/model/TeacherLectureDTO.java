@@ -16,7 +16,7 @@ public class TeacherLectureDTO {
 	int reststart;
 	int resthour;
 	int reststate;
-	int state;
+	String state;
 	String normdate;
 	String restdate;
 	String buildName;
@@ -132,10 +132,10 @@ public class TeacherLectureDTO {
 	public void setReststate(int reststate) {
 		this.reststate = reststate;
 	}
-	public int getState() {
+	public String getState() {
 		return state;
 	}
-	public void setState(int state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 	public int getTh() {

@@ -26,7 +26,7 @@
 		
 </head>
 
-<body class="adminbody" onLoad="load_lec();">
+<body class="adminbody">
 
 <div id="main">
 
@@ -141,7 +141,7 @@
 		</div>
 	</div>
 	<!-- 좌측 Sidebar 메뉴 끝-->
-
+		
     <div class="content-page">
 	    <div class="content">
 			<div class="container-fluid">
@@ -154,8 +154,8 @@
 							<h1 class="main-title float-left">컴퓨터소프트웨어학과</h1>
 							<ol class="breadcrumb float-right">
 								<li class="breadcrumb-item">Home</li>
-								<li class="breadcrumb-item">교수</li>
-								<li class="breadcrumb-item active">메인</li>
+								<li class="breadcrumb-item">조교</li>
+								<li class="breadcrumb-item active">휴보강</li>
 							</ol>
 							<div class="clearfix"></div>
 						</div>
@@ -169,66 +169,16 @@
 							<div class="card-header mycolor3" style="padding:10px">
 								<div class="row">
 									<div class="col" align="left">
-										<h3><i class="fa fa-table"></i> 공지사항 </h3>
-									</div>
-									<div class="col" align="right">
-										<h3>교수님1</h3>
-									</div>
-								</div>
-							</div>
-							<div class="card-body" style="padding:10px">
-
-								<table class="table table-bordered mytable" style="width:100%;">
-									<tr class="mycolor1">
-										<td>날짜</td>
-										<td>제목</td>
-										<td width="60"></td>
-									</tr>
-									<tr>
-										<td>2019-06-06</td>
-										<td style="text-align:left">수강신청기간 공지</td>
-										<td>
-											<a href="" class="btn btn-xs btn-outline-primary">보기</a>
-										</td>
-									</tr>
-								</table>
-
-								<ul class='pagination pagination-sm justify-content-center'>
-									<li class='page-item'><a class="page-link" href="#">◀</a></li>
-									<li class='page-item'><a class="page-link" href="#">◁</a></li>
-									<li class='page-item'><a class="page-link" href="#">2</a></li>
-									<li class='page-item'><a class="page-link" href="#">3</a></li>
-									<li class='page-item active'><span class='page-link' style='background-color:steelblue'>4</span></li>
-									<li class='page-item'><a class="page-link" href="#">5</a></li>
-									<li class='page-item'><a class="page-link" href="#">6</a></li>
-									<li class='page-item'><a class="page-link" href="#">▷</a></li>
-									<li class='page-item'><a class="page-link" href="#">▶</a></li>
-								</ul>
-							</nav>
-
-							</div>		<!-- card body end -->
-						</div>		<!-- card end -->
-					</div>
-						
-				</div>	<!-- row end -->
-
-				<div class="row">
-				
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-						<div class="card mb-3">
-							<div class="card-header mycolor3" style="padding:10px">
-								<div class="row">
-									<div class="col" align="left">
 										<h3><i class="fa fa-table"></i> 휴보강 </h3>
 									</div>
 									<div class="col" align="right">
-										<h3></h3>
+										<h3>조교</h3>
 									</div>
 								</div>
 							</div>
 							<div class="card-body" style="padding:10px">
 
-								<table class="table table-bordered mytable" style="width:100%;">
+								<table class="table table-bordered table-responsive-sm mytable" style="width:100%;">
 									<tr class="mycolor1">
 										<td>학과</td>
 										<td>교수님</td>
@@ -240,7 +190,7 @@
 										<td>보강교시</td>
 										<td>보강강의실</td>
 										<td>처리상태</td>
-										<td>학과장</td>									
+										<td width="140">학과장</td>
 									</tr>
 									<tr>
 										<td>컴소과</td>
@@ -252,91 +202,27 @@
 										<td class="mycolor3">2019-06-15</td>
 										<td class="mycolor3">1, 2 교시</td>
 										<td class="mycolor3">인관 컴퓨터실1</td>
-										<td><font color="red"><b>신청</b></font></td>
-										<td>
-											<a href="" class="btn btn-xs btn-outline-primary">보기</a>
+										<td><b>학과장승인</b></td>
+										<td>					<!-- 0 신청 or 1 취소 or 2 학과장승인 or 3 반려 or 4 최종승인 -->
+											<a href="" class="btn btn-xs btn-outline-primary">학과장 승인</a>
+											<a href="" class="btn btn-xs btn-outline-danger">반려</a>
 										</td>
 									</tr>
+
 								</table>
-
-								<ul class='pagination pagination-sm justify-content-center'>
-									<li class='page-item'><a class="page-link" href="#">◀</a></li>
-									<li class='page-item'><a class="page-link" href="#">◁</a></li>
-									<li class='page-item'><a class="page-link" href="#">2</a></li>
-									<li class='page-item'><a class="page-link" href="#">3</a></li>
-									<li class='page-item active'><span class='page-link' style='background-color:steelblue'>4</span></li>
-									<li class='page-item'><a class="page-link" href="#">5</a></li>
-									<li class='page-item'><a class="page-link" href="#">6</a></li>
-									<li class='page-item'><a class="page-link" href="#">▷</a></li>
-									<li class='page-item'><a class="page-link" href="#">▶</a></li>
-								</ul>
-							</nav>
-
-
-							</div>		<!-- card body end -->
-						</div>		<!-- card end -->
-					</div>
-						
-				</div>	<!-- row end -->
-
-				<div class="row">
-			
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-						<div class="card mb-3">
-							<div class="card-header mycolor3" style="padding:10px">
-								<div class="row">
-									<div class="col" align="left">
-										<h3><i class="fa fa-table"></i> 교과목 문의 </h3>
-									</div>
-									<div class="col" align="right">
-										<h3></h3>
-									</div>
-								</div>
-							</div>
-							<div class="card-body" style="padding:10px">
-
-								<table class="table table-bordered mytable" style="width:100%;">
-									<tr class="mycolor1">
-										<td>날짜</td>
-										<td>교과목</td>
-										<td>제목</td>
-										<td>학생</td>
-										<td>상태</td>
-										<td width="60"></td>
-									</tr>
-									<tr>
-										<td>2019-06-06</td>
-										<td>PHP</td>
-										<td style="text-align:left">출석문의</td>
-										<td>홍길동</td>
-										<td><font color="red"><b>문의</b></font></td>
-										<td>
-											<a href="te_lecqaedit.html" class="btn btn-xs btn-outline-primary">보기</a>
-										</td>
-									</tr>
-									<tr>
-										<td>2019-06-02</td>
-										<td>PHP</td>
-										<td style="text-align:left">출석문의</td>
-										<td>홍길동</td>
-										<td><font color="blue"><b>답변</b></font></td>
-										<td>
-											<a href="te_lecqaedit.html" class="btn btn-xs btn-outline-primary">보기</a>
-										</td>
-									</tr>
-								</table>
+								</form>
 
 								<nav>
 									<ul class='pagination pagination-sm justify-content-center'>
-										<li class='page-item'><a class="page-link" href="#">◀</a></li>
-										<li class='page-item'><a class="page-link" href="#">◁</a></li>
-										<li class='page-item'><a class="page-link" href="#">2</a></li>
-										<li class='page-item'><a class="page-link" href="#">3</a></li>
-										<li class='page-item active'><span class='page-link' style='background-color:steelblue'>4</span></li>
-										<li class='page-item'><a class="page-link" href="#">5</a></li>
-										<li class='page-item'><a class="page-link" href="#">6</a></li>
-										<li class='page-item'><a class="page-link" href="#">▷</a></li>
-										<li class='page-item'><a class="page-link" href="#">▶</a></li>
+										<li class='page-item'><a class="page-link" href="/member/lists/page" data-ci-pagination-page="1" rel="start">◀</a></li>
+										<li class='page-item'><a class="page-link" href="/member/lists/page/10" data-ci-pagination-page="3" rel="prev">◁</a></li>
+										<li class='page-item'><a class="page-link" href="/member/lists/page/5" data-ci-pagination-page="2">2</a></li>
+										<li class='page-item'><a class="page-link" href="/member/lists/page/10" data-ci-pagination-page="3">3</a></li>
+										<li class='page-item active'><span class='page-link' style='background-color:steelblue'>4</li>
+										<li class='page-item'><a class="page-link" href="/member/lists/page/20" data-ci-pagination-page="5">5</a></li>
+										<li class='page-item'><a class="page-link" href="/member/lists/page/25" data-ci-pagination-page="6">6</a></li>
+										<li class='page-item'><a class="page-link" href="/member/lists/page/20" data-ci-pagination-page="5" rel="next">▷</a></li>
+										<li class='page-item'><a class="page-link" href="/member/lists/page/45" data-ci-pagination-page="10">▶</a></li>
 									</ul>
 								</nav>
 

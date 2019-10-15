@@ -6,19 +6,29 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 public class TeacherLectureDAO extends DAOBase{
 	Connection conn = null; 
 	Statement stmt = null;	
 	PreparedStatement pstmt = null;
 	ResultSet rs = null; 
+	HttpSession sin = null;
 	
 	//TeacherLectureDTO dto = new TeacherLectureDTO();
 	TeacherDTO dtoTeacher = null;
 	DepartDTO dtoDepart = null;
 	
 	
-	public ArrayList<TeacherLectureDTO> search(String text1) {
-		String SQL = "select * from lecture left join teacher on lecture.teacher_id = teacher.id left join subject on lecture.subject_id = subject.id left join lectureday on lecture.id = lectureday.lecture_id left join depart on depart.id = teacher.depart_id left join room on lectureday.room_id = room.id left join building on room.building_id = building.id  WHERE teacher.id = 2 and DATE(lectureday.normdate)=DATE('"+text1+"') or DATE(lectureday.restdate)=DATE('"+text1+"')";
+	public ArrayList<TeacherLectureDTO> search(String text1, HttpServletRequest request, HttpServletResponse response) {
+		sin = request.getSession();
+		String SQL = "select * from lecture left join teacher on lecture.teacher_id = teacher.id "
+				+ "left join subject on lecture.subject_id = subject.id left join lectureday on lecture.id = lectureday.lecture_id"
+				+ " left join depart on depart.id = teacher.depart_id left join room on lectureday.room_id = room.id left join"
+				+ " building on room.building_id = building.id  WHERE teacher.uid = '"+sin.getAttribute("uid")+"' and DATE(lectureday.normdate)=DATE('"+text1+"') "
+						+ "or DATE(lectureday.restdate)=DATE('"+text1+"')";
 		ArrayList<TeacherLectureDTO> list = new ArrayList<TeacherLectureDTO>();
 		try {
 			conn = getConnection();
@@ -63,8 +73,12 @@ public class TeacherLectureDAO extends DAOBase{
 	 * 기능 : lecture의 id로 SQL 값 얻어옴
 	 * 
 	 */
-	public ArrayList<TeacherLectureDTO> search(int id) {
-		String SQL = "select * from lecture left join teacher on lecture.teacher_id = teacher.id left join subject on lecture.subject_id = subject.id left join lectureday on lecture.id = lectureday.lecture_id left join depart on depart.id = teacher.depart_id left join room on lectureday.room_id = room.id left join building on room.building_id = building.id  WHERE teacher.id = 2";
+	public ArrayList<TeacherLectureDTO> search(int id, HttpServletRequest request, HttpServletResponse response) {
+		sin = request.getSession();
+		String SQL = "select * from lecture left join teacher on lecture.teacher_id = teacher.id "
+				+ "left join subject on lecture.subject_id = subject.id left join lectureday on lecture.id = lectureday.lecture_id "
+				+ "left join depart on depart.id = teacher.depart_id left join room on lectureday.room_id = room.id "
+				+ "left join building on room.building_id = building.id  WHERE teacher.uid = '" + sin.getAttribute("uid")+"'";
 		ArrayList<TeacherLectureDTO> list = new ArrayList<TeacherLectureDTO>();
 		try {
 			conn = getConnection();
@@ -97,9 +111,13 @@ public class TeacherLectureDAO extends DAOBase{
 		}
 		return list;
 	}
-	public TeacherLectureDTO lectureInfo(String text1, String id) {
-
-		String SQL = "select * from lecture left join teacher on lecture.teacher_id = teacher.id left join subject on lecture.subject_id = subject.id left join lectureday on lecture.id = lectureday.lecture_id left join depart on depart.id = teacher.depart_id left join room on lectureday.room_id = room.id left join building on room.building_id = building.id  WHERE teacher.id = 2 and DATE(lectureday.normdate)=DATE('"+text1+"') and lecture.id = '"+id+"';";
+	public TeacherLectureDTO lectureInfo(String text1, String id, HttpServletRequest request, HttpServletResponse response) {
+		sin = request.getSession();
+		String SQL = "select * from lecture left join teacher on lecture.teacher_id = teacher.id "
+				+ "left join subject on lecture.subject_id = subject.id left join lectureday on lecture.id = lectureday.lecture_id "
+				+ "left join depart on depart.id = teacher.depart_id left join room on lectureday.room_id = room.id "
+				+ "left join building on room.building_id = building.id  WHERE teacher.uid = '"+sin.getAttribute("uid")+"' and "
+				+ "DATE(lectureday.normdate)=DATE('"+text1+"') and lecture.id = '"+id+"';";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -129,8 +147,11 @@ public class TeacherLectureDAO extends DAOBase{
 		}
 		return null;
 	}
-	public ArrayList<StudentLectureInfoDTO> stuList(String day, String lecture_id, int [] nStuCheck){
-		String SQL = "SELECT * FROM lecture left join lectureday on lecture.id = lectureday.lecture_id left join mylecture on lecture.id = mylecture.lecture_id left join student on mylecture.student_id = student.id left join depart on student.depart_id = depart.id left join subject on subject.id = lecture.subject_id where lectureday.normdate = DATE('"+day+"') and lectureday.lecture_id = "+lecture_id+";";
+	public ArrayList<StudentLectureInfoDTO> stuList(String day, String lecture_id, int [] nStuCheck ){
+		String SQL = "SELECT * FROM lecture left join lectureday on lecture.id = lectureday.lecture_id "
+				+ "left join mylecture on lecture.id = mylecture.lecture_id left join student on mylecture.student_id = student.id "
+				+ "left join depart on student.depart_id = depart.id left join subject on subject.id = lecture.subject_id "
+				+ "where lectureday.normdate = DATE('"+day+"') and lectureday.lecture_id = "+lecture_id+";";
 		
 		try {
 			conn = getConnection();
@@ -172,7 +193,10 @@ public class TeacherLectureDAO extends DAOBase{
 		return null;
 	}
 	public void stuCheck(String day, String lecture_id, String rowno, String colno, String v){
-		String SQL = "SELECT * FROM lecture left join lectureday on lecture.id = lectureday.lecture_id left join mylecture on lecture.id = mylecture.lecture_id left join student on mylecture.student_id = student.id left join depart on student.depart_id = depart.id left join subject on subject.id = lecture.subject_id where lectureday.normdate = DATE('"+day+"') and lectureday.lecture_id = "+lecture_id+" and student.id="+rowno+";";
+		String SQL = "SELECT * FROM lecture left join lectureday on lecture.id = lectureday.lecture_id "
+				+ "left join mylecture on lecture.id = mylecture.lecture_id left join student on mylecture.student_id = student.id "
+				+ "left join depart on student.depart_id = depart.id left join subject on subject.id = lecture.subject_id "
+				+ "where lectureday.normdate = DATE('"+day+"') and lectureday.lecture_id = "+lecture_id+" and student.id="+rowno+";";
 		ArrayList<String> thList = null;
 		
 		try {
@@ -223,7 +247,10 @@ public class TeacherLectureDAO extends DAOBase{
 		}
 	}
 	public void stuAllCheck(String day, String lecture_id){
-		String SQL = "SELECT lectureday.th, subject.ihourFROM lecture left join lectureday on lecture.id = lectureday.lecture_id left join mylecture on lecture.id = mylecture.lecture_id left join student on mylecture.student_id = student.id left join depart on student.depart_id = depart.id where lectureday.normdate=DATE('"+day+"') and lectureday.lecture_id = '"+lecture_id+"';";
+		String SQL = "SELECT lectureday.th, subject.ihourFROM lecture left join lectureday on lecture.id = lectureday.lecture_id "
+				+ "left join mylecture on lecture.id = mylecture.lecture_id left join student on mylecture.student_id = student.id "
+				+ "left join depart on student.depart_id = depart.id where lectureday.normdate=DATE('"+day+"') "
+						+ "and lectureday.lecture_id = '"+lecture_id+"';";
 		
 		try {
 			conn = getConnection();

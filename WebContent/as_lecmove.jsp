@@ -6,6 +6,7 @@
 <!-- 학생 : 유소영(3), 김해리(3), 이민호(2), 김진혁(2)                                              -->
 <!-------------------------------------------------------------------------------->	
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -28,7 +29,9 @@
 </head>
 
 <body class="adminbody">
-
+	<script>
+		history.replaceState({}, null, location.pathname);
+	</script>
 <div id="main">
 
 	<!--상단 메뉴 시작 -->
@@ -105,7 +108,23 @@
 								</div>
 							</div>
 							<div class="card-body" style="padding:10px">
-
+								<script>
+													
+									function check(number){
+										if(number === 1)
+										{
+											if(confirm('학과장 승인 하시겠습니까?')){
+												return true;
+											}
+										}
+										if(number === 2){
+											if(confirm('반려 하시겠습니까?')){
+												return true;
+											}
+										}
+										return false;
+									}
+								</script>
 								<table class="table table-bordered table-responsive-sm mytable" style="width:100%;">
 									<tr class="mycolor1">
 										<td>학과</td>
@@ -120,25 +139,37 @@
 										<td>처리상태</td>
 										<td width="140">학과장</td>
 									</tr>
-									<tr>
-										<td>컴소과</td>
-										<td>교수님1</td>
-										<td>PHP</td>
-										<td>2학년/A반</td>
-										<td class="mycolor4">2019-03-12</td>
-										<td class="mycolor4">3, 4 교시</td>
-										<td class="mycolor3">2019-06-15</td>
-										<td class="mycolor3">1, 2 교시</td>
-										<td class="mycolor3">인관 컴퓨터실1</td>
-										<td><b>학과장승인</b></td>
-										<td>					<!-- 0 신청 or 1 취소 or 2 학과장승인 or 3 반려 or 4 최종승인 -->
-											<a href="" class="btn btn-xs btn-outline-primary">학과장 승인</a>
-											<a href="" class="btn btn-xs btn-outline-danger">반려</a>
-										</td>
-									</tr>
-
+									<!-- 0 신청 or 1 취소 or 2 학과장승인 or 3 반려 or 4 최종승인 -->
+									<c:forEach var="item" items="${dtolist}">
+										<tr>
+											<td>${item.getDepart()}</td>
+											<td>${item.getTeacher_id().getName()}</td>
+											<td>${item.getSubject_name()}</td>
+											<td>${item.getGrade()}학년/${item.get_class()}반</td>
+											<td class="mycolor4">${item.getNormdate()}</td>
+											<td class="mycolor4">
+												<c:forEach var="i" begin="${item.getNormstart() - 8}" end="${item.getNormhour() + item.getNormstart() - 9}" varStatus="status">
+													${i}<c:if test="${i ne status.end}">,</c:if>
+												</c:forEach>
+												교시
+											</td>
+											<td class="mycolor3">${item.getRestdate()}</td>
+											<td class="mycolor3">
+												<c:forEach var="i" begin="${item.getReststart() - 8}" end="${item.getResthour() + item.getReststart() - 9}" varStatus="status">
+													${i}<c:if test="${i ne status.end}">,</c:if>
+												</c:forEach>
+												교시
+											</td>
+											<td class="mycolor3">${item.getBuildName()} ${item.getRoomName()}</td>
+											<td><b>${item.getState()}</b></td>
+											<td>
+												<a href="as-lecmove-list.do?no=${item.getId()}&c=1" class="btn btn-xs btn-outline-primary" onclick="return check(1)">학과장 승인</a>
+												<a href="as-lecmove-list.do?no=${item.getId()}&c=2" class="btn btn-xs btn-outline-danger" onclick="return check(2)">반려</a>
+											</td>
+										</tr>
+									</c:forEach>
 								</table>
-								</form>
+
 
 								<nav>
 									<ul class='pagination pagination-sm justify-content-center'>

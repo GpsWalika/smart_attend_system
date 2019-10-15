@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class TeacherLectureAllDAO extends DAOBase{
@@ -16,13 +18,16 @@ public class TeacherLectureAllDAO extends DAOBase{
 	ResultSet rs = null; 
 	HttpSession sesobj = null;
 	
-	public ArrayList<SubjectDTO> selectList(String [] values)
+	public ArrayList<SubjectDTO> selectList(String [] values, HttpServletRequest request, HttpServletResponse response)
 	{
-		
+		sesobj = request.getSession();
 		ArrayList<SubjectDTO> str = new ArrayList<SubjectDTO>();
 		SubjectDTO dto = null;
 		try {
-			String SQL = "select subject.id, subject.name from subject left join lecture on subject.id = lecture.subject_id WHERE subject.depart_id = '1' and subject.yyyy='"+values[0]+"' and subject.term = '"+values[1]+"' and subject.grade = '"+values[2]+"' and lecture.class='"+values[3]+"';";
+			String SQL = "select subject.id, subject.name from subject left join lecture on subject.id = lecture.subject_id "
+					+ "WHERE subject.depart_id = '"+(int)sesobj.getAttribute("depart_id")+"' and subject.yyyy='"+values[0]+"' and subject.term = '"+values[1]+"' and "
+							+ "subject.grade = '"+values[2]+"' and lecture.class='"+values[3]+"';";
+			
 	  		conn = getConnection();
 	  		stmt = conn.createStatement();
 	  		rs = stmt.executeQuery(SQL);
@@ -50,7 +55,9 @@ public class TeacherLectureAllDAO extends DAOBase{
 		ArrayList<TeacherLectureDTO> dtoList = null;
 		try {
 			dtoList = new ArrayList<TeacherLectureDTO>();
-			String SQL = "select * from subject left join lecture on subject.id = lecture.subject_id left join lectureday on lectureday.lecture_id = lecture.id WHERE lecture.id = lectureday.lecture_id and subject.id = '"+value+"' ORDER BY lectureday.th ASC;";
+			String SQL = "select * from subject left join lecture on subject.id = lecture.subject_id "
+					+ "left join lectureday on lectureday.lecture_id = lecture.id "
+					+ "WHERE lecture.id = lectureday.lecture_id and subject.id = '"+value+"' ORDER BY lectureday.th ASC;";
 	  		conn = getConnection();
 	  		stmt = conn.createStatement();
 	  		rs = stmt.executeQuery(SQL);
@@ -78,7 +85,8 @@ public class TeacherLectureAllDAO extends DAOBase{
 		StudentDTO stdto = null;
 		
 		try {
-			String SQL ="select subject.ihour, lecture.id from subject left join lecture on lecture.subject_id = subject.id where subject.id = "+value+" and lecture.class='"+grade+"';";
+			String SQL ="select subject.ihour, lecture.id from subject left join lecture on lecture.subject_id = subject.id "
+					+ "where subject.id = "+value+" and lecture.class='"+grade+"';";
 			
 			conn = getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -90,7 +98,9 @@ public class TeacherLectureAllDAO extends DAOBase{
 			ArrayList<String> check = null;
 			dtoList = new ArrayList<TeacherLectureAllDTO>();
 			
-			SQL = "select mylecture.*, student.* from subject left join lecture on subject.id = lecture.subject_id left join mylecture on mylecture.lecture_id = lecture.id left join student on student.id = mylecture.student_id where student.id = mylecture.student_id and subject.id='"+value+"' and mylecture.lecture_id='"+lecture_id+"'";
+			SQL = "select mylecture.*, student.* from subject left join lecture on subject.id = lecture.subject_id "
+					+ "left join mylecture on mylecture.lecture_id = lecture.id left join student on student.id = mylecture.student_id "
+					+ "where student.id = mylecture.student_id and subject.id='"+value+"' and mylecture.lecture_id='"+lecture_id+"'";
 			conn = getConnection();
 	  		stmt = conn.createStatement();
 	  		rs = stmt.executeQuery(SQL);
@@ -133,7 +143,9 @@ public class TeacherLectureAllDAO extends DAOBase{
 	}
 	public void stuCheck(String subId, String lecClass, String rowno, String colno, String v){
 		
-		String SQL = "select * from lecture right join mylecture on mylecture.lecture_id = lecture.id left join subject on subject.id = lecture.subject_id left join student on student.id = mylecture.student_id where lecture.class='"+lecClass+"' and subject.id = '"+subId+"' and student.id = '"+rowno+"';";
+		String SQL = "select * from lecture right join mylecture on mylecture.lecture_id = lecture.id "
+				+ "left join subject on subject.id = lecture.subject_id left join student on student.id = mylecture.student_id"
+				+ " where lecture.class='"+lecClass+"' and subject.id = '"+subId+"' and student.id = '"+rowno+"';";
 
 		ArrayList<String> thList = null;
 		
